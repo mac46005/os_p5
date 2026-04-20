@@ -9,7 +9,7 @@ OSS::OSS::OSS(int argc, char **argv) {
                 if (options.needsHelp == true) {
                     needs_help_ = options.needsHelp;
                 } else {
-                    oss_clock_ = new OSSClock("./src/oss/oss.cpp",0.0,0.0,0,1000000);
+                    oss_clock_ = new OSSClock("./src/oss/oss.cpp",options.childTimeLimit,options.launchInterval,0,1000000);
                 }
             }
         );

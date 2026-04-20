@@ -11,7 +11,7 @@ namespace OSS {
         bool needsHelp = false;
         int maxProc = 1;
         int maxSimul = 1;
-        float timeLimitForChildren = 1;
+        float childTimeLimit = 1;
         float launchInterval = 1;
         std::string logFile = "oss.log";
     };
