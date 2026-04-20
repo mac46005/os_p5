@@ -1,9 +1,9 @@
 #include "../../include/clock/clock.hpp"
 
 
-Clock::Clock(string parent, string key): key_(key), parent_(parent) {
-    string name_of_process = "Clock::Clock()";
-    shm_key_ = ftok(key.c_str(), 1);
+Clock::Clock(std::string parent, std::string key): key_(key), parent_(parent) {
+    std::string name_of_process = "Clock::Clock()";
+    shm_key_ = ftok(key_.c_str(), 1);
     if (shm_key_ == -1) {
         throw Error(parent_, name_of_process, "Failed to ftok()", strerror(errno));
     }
@@ -32,9 +32,9 @@ void Clock::addTimeToPtrTime(Time *ptr_time, Time add_time) {
     ptr_time->sec = ptr_time->sec + add_time.sec;
     ptr_time->nano = ptr_time->nano + add_time.nano;
 
-    if (ptr_time->nano > SECOND_TO_NANO) {
+    if (ptr_time->nano >= Clock::SECOND_TO_NANO) {
         ptr_time->sec++;
-        ptr_time->nano -= SECOND_TO_NANO;
+        ptr_time->nano -= Clock::SECOND_TO_NANO;
     }
 }
 
@@ -43,7 +43,8 @@ void Clock::subtractTimeToPtrTime(Time *ptr_time, Time subtract_time) {
     ptr_time->nano -= subtract_time.nano;
 
     if (ptr_time->nano < 0) {
-        ptr
+        ptr_time->sec--;
+        ptr_time->nano += Clock::SECOND_TO_NANO;
     }
 }
 
@@ -57,7 +58,7 @@ void Clock::rmid() {
 }
 
 
-string Clock::toString() {
-    string time_str = to_string(current_time_->sec) + ":" + to_string(current_time_->nano);
+std::string Clock::toString() {
+    std::string time_str = std::to_string(current_time_->sec) + ":" + std::to_string(current_time_->nano);
     return time_str;
 }

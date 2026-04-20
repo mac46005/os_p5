@@ -1,3 +1,4 @@
+#pragma once
 #include "../clock/clock.hpp"
 
 namespace OSS {
@@ -5,6 +6,8 @@ namespace OSS {
     private:
         Clock *clock;
 
+
+        Time time_quantum_{0,0};
         Time oss_work_time_{0,0};
         Time child_time_limit_{0,0};
         Time child_launch_time_limit_{0,0};
@@ -14,8 +17,14 @@ namespace OSS {
 
 
     public:
-        explicit OSSClock(string key, int child_time_limit_sec, int child_time_limit_nano, int child_launch_limit_sec, int child_launch_limit_nano) {}
-        void updateClockBy(Time time);
+        explicit OSSClock(
+            std::string key, 
+            float child_time_limit_, 
+            float child_launch_limit_, 
+            int time_quantum_sec,
+            int time_quantum_nano
+        ) {}
+        void updateClockByQuantum();
         void updateOssTimeBy(Time time);
         
     };
