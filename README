@@ -1,0 +1,20 @@
+# PROJECT 4
+
+**Name**: Marco Preciado
+**Date**: Wed Feb 25 09:13:33 PM CST 2026
+**Environment**: Ubuntu on Windows ,VSCode, Penguin Linux/GNU, VIM
+**Purpose**: Simulate the round robin scheduler on an OSS
+
+**ChatGPT**:
+
+Prompt:
+Revise my code for any errors. Specifically in messaging.
+
+Conclusion:
+Revised code and should where any potential errors can occur.
+
+Prompt:
+Unsure how to handle signal for terminating.
+
+Conclusion:
+Showed how to use signal handling for 3 seconds and handle ctrl+c
