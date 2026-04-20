@@ -8,7 +8,8 @@ OSS::OSSClock::OSSClock(
     int time_quantum_nano): 
     time_quantum_(Time{time_quantum_sec, time_quantum_nano})
 {
-        
+        child_time_limit_ = Clock::floatToTime(child_launch_limit);
+        child_launch_time_limit_ = Clock::floatToTime(child_launch_limit);
 }
 
 
