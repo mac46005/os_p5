@@ -19,8 +19,8 @@ namespace OSS {
     public:
         explicit OSSClock(
             std::string key, 
-            float child_time_limit_, 
-            float child_launch_limit_, 
+            float child_time_limit, 
+            float child_launch_limit, 
             int time_quantum_sec,
             int time_quantum_nano
         ) {}

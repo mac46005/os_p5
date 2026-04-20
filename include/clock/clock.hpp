@@ -22,6 +22,7 @@ public:
     Time *getCurrentTime();
     static void addTimeToPtrTime(Time *ptr_time, Time add_time);
     static void subtractTimeToPtrTime(Time *ptr_time, Time subtract_time);
+    static Time floatToTime(float time_f);
     void detach();
     void rmid();
 
