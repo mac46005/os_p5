@@ -35,3 +35,9 @@ void Clock::detach() {
 void Clock::rmid() {
     shmctl(shm_id_, IPC_RMID, NULL);
 }
+
+
+string Clock::toString() {
+    string time_str = to_string(sim_clock_->sec) + ":" + to_string(sim_clock_->nano);
+    return time_str;
+}

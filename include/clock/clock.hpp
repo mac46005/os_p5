@@ -21,6 +21,10 @@ private:
 public:
     explicit Clock(string parent, string key);
     Time *getCurrentTime();
+    void addTime(Time &a, Time &b);
+    void subtractTime(Time &a, Time &b);
     void detach();
     void rmid();
+
+    string toString();
 };
