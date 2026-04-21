@@ -6,6 +6,7 @@
 #include "resource_manager.hpp"
 #include "oss_output.hpp"
 #include "../msg/msg_manager.hpp"
+#include "pcb.hpp"
 
 namespace OSS {
     struct PCBInfo {
@@ -77,11 +78,15 @@ namespace OSS {
         // std::vector<PCB> getBlockedList();
 
 
+        void requeueCurrentProcess();
+        void releaseCurrentProcessResources();
         void handleRequest(const MsgBuffer &msg);
         void handleRelease(const MsgBuffer &msg);
+        void handleTerminate();
         void blockCurrentProcess(int resource);
         void unblockProcessIfPossible();
-        void runDeadlockDetectionIfNeeded();
+        bool shouldRunDeadlockCheck();
+        void runDeadlockDetection();
         void resolveDeadlock();
         PCB *findBlockedByPid(pid_t pid);
 

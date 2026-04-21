@@ -9,6 +9,6 @@ namespace OSS {
         int end_sec = 0;
         int end_nano = 0;
         int resource_allocated[10];
-        int requested_resource;
+        int requested_resource = -1;
     };
 }

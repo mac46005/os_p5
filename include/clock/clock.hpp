@@ -20,6 +20,7 @@ private:
     
 public:
     explicit Clock(std::string parent, std::string key);
+    void initClock();
     Time *getCurrentTime();
     static void addTimeToPtrTime(Time *ptr_time, Time add_time);
     static void subtractTimeToPtrTime(Time *ptr_time, Time subtract_time);

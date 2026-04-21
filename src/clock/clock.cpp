@@ -18,12 +18,11 @@ Clock::Clock(std::string parent, std::string key): key_(key), parent_(parent) {
         throw Error(parent_, name_of_process, "Failed to shmat()", strerror(errno));
     }
 
+}
+void Clock::initClock() {
     current_time_->sec = 0;
     current_time_->nano = 0;
-
-
 }
-
 Time *Clock::getCurrentTime() {
     return current_time_;
 }

@@ -8,6 +8,7 @@ OSS::OSSClock::OSSClock(
     int time_quantum_nano) : time_quantum_(Time{time_quantum_sec, time_quantum_nano})
 {
     clock_ = new Clock("OSS", key);
+    clock_->initClock();
     child_time_limit_ = Clock::floatToTime(child_time_limit);
     child_launch_time_limit_ = Clock::floatToTime(child_launch_limit);
 }
@@ -55,7 +56,13 @@ void OSS::OSSClock::resetLaunchInterval()
 {
     Time *current_time = clock_->getCurrentTime();
     Time new_launch_time{0, 0};
-    Clock::addTimeToPtrTime(&new_launch_time, *current_time);
+    new_launch_time.sec = child_launch_time_limit_.sec + current_time->sec;
+    new_launch_time.nano = child_launch_time_limit_.nano + current_time->nano;
+    // wow
+    if (new_launch_time.nano >= 1000000000) {
+        new_launch_time.sec++;
+        new_launch_time.nano -= 1000000000;
+    }
     child_launch_time_ = new_launch_time;
     is_launch_interval_time_reached_ = false;
 }
