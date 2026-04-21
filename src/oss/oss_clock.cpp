@@ -8,7 +8,7 @@ OSS::OSSClock::OSSClock(
     int time_quantum_nano) : time_quantum_(Time{time_quantum_sec, time_quantum_nano})
 {
     clock_ = new Clock("OSS", key);
-    child_time_limit_ = Clock::floatToTime(child_launch_limit);
+    child_time_limit_ = Clock::floatToTime(child_time_limit);
     child_launch_time_limit_ = Clock::floatToTime(child_launch_limit);
 }
 
@@ -69,7 +69,10 @@ bool OSS::OSSClock::launchIntervalReached() {
 
 
 
-
+void OSS::OSSClock::cleanUp() {
+    clock_->detach();
+    clock_->rmid();
+}
 
 
 

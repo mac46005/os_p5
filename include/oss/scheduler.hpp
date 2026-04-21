@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <sys/wait.h>
 #include "pcb_queue.hpp"
 #include "oss_clock.hpp"
 #include "resource_manager.hpp"
@@ -55,7 +56,7 @@ namespace OSS {
         std::vector<PCB> pcb_blocked_list;
         std::vector<PCB> completed_processes;
         
-        PCB *current_process_running_ = new PCB{.pid = -1};
+        PCB current_process_running_ = PCB{.pid = -1};
         PCB createPCB(pid_t pid);
         void forkProcess();
         void terminateProcess();
@@ -73,6 +74,7 @@ namespace OSS {
         void updateProcessInReadyQueue();
         
         PCBQueue *getReadyQueue();
-        std::vector<PCB> getBlockedList();
+        // std::vector<PCB> getBlockedList();
+        void cleanUp();
     };
 }

@@ -33,5 +33,10 @@ namespace OSS {
         
         void resetLaunchInterval();
         bool launchIntervalReached();
+        void cleanUp();
+
+        inline std::string toString() {
+            return clock_->toString();
+        }
     };
 }

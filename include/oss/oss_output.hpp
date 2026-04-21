@@ -7,6 +7,9 @@
 #include "argument_error.hpp"
 #include "../error/error.hpp"
 #include "../color/ui.hpp"
+#include "oss_clock.hpp"
+
+
 namespace OSS {
     class OssOutput {
     private:
@@ -23,7 +26,7 @@ namespace OSS {
         void printHelpMessage();
         void printArgumentErrorMessage(ArgumentError &argument_error);
         void printOssErrorMessage(Error &error);
-
+        void printClock(OSSClock *clock);
 
         void openLogFile();
         void closeLogFile();

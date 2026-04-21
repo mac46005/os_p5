@@ -4,6 +4,7 @@
 #include "oss_output.hpp"
 #include "scheduler.hpp"
 #include "../msg/msg_manager.hpp"
+#include "signal_flags.hpp"
 
 namespace OSS {
     class OSS {
@@ -19,5 +20,7 @@ namespace OSS {
     public:
         explicit OSS(int argc, char ** argv);
         int run();
+        void cleanUp();
+        void shutDownChildren();
     };
 }

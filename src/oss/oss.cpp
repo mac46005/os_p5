@@ -68,12 +68,15 @@ int OSS::OSS::run()
             oss_output_->openLogFile();
 
             while (
-                (scheduler_->stillHaveChildrenToLaunch() || scheduler_->stillHaveChildrenInSystem()))
+                !g_timeout && !g_stop &&
+                (scheduler_->stillHaveChildrenToLaunch() || scheduler_->stillHaveChildrenInSystem() ))
             {
+                Color::printInfo("OSS", "in cycle");
                 scheduler_->launchChildrenIfAble();
                 scheduler_->canUnblockBlockedProcess();
                 scheduler_->updateProcessInReadyQueue();
                 oss_clock_->updateClockByQuantum();
+                oss_output_->printClock(oss_clock_);
             }
         }
         catch (Error &e)
@@ -86,6 +89,15 @@ int OSS::OSS::run()
         }
         
     }
-
+    Color::printInfo("OSS", "Terminating...");
+    cleanUp();
     return EXIT_SUCCESS;
 }
+
+
+void OSS::OSS::cleanUp() {
+    oss_clock_->cleanUp();
+    msg_manager_->cleanUp();
+    oss_output_->cleanUp();
+}
+

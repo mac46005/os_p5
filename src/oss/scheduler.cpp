@@ -10,6 +10,7 @@ OSS::Scheduler::Scheduler(
 ): oss_clock_(oss_clock), resource_manager_(resource_manager), oss_output_(oss_output), msg_manager_(msg_manager) {
     pcb_info_.max_process_count_ = max_proc;
     pcb_info_.max_simultaneous_count_ = max_simul;
+    pcb_ready_queue_ = new PCBQueue();
 }
 
 OSS::PCB OSS::Scheduler::createPCB(pid_t pid) {
@@ -35,7 +36,8 @@ void OSS::Scheduler::forkProcess() {
     char *args[] = {
         const_cast<char *>("./user_proc"),
         const_cast<char *>(child_runtime_sec_str.c_str()),
-        const_cast<char *>(child_runtime_nano_str.c_str())
+        const_cast<char *>(child_runtime_nano_str.c_str()),
+        nullptr
     };
 
     pid_t pid = fork();
@@ -57,9 +59,8 @@ bool OSS::Scheduler::stillHaveChildrenToLaunch() {
     return !pcb_info_.isProcCountReached();
 }
 bool OSS::Scheduler::stillHaveChildrenInSystem() {
-    return pcb_info_.hasChildrenInSystem();
+    return pcb_info_.hasChildrenInSystem() || current_process_running_.pid != -1;
 }
-
 
 void OSS::Scheduler::launchChildrenIfAble() {
     if (pcb_info_.hasOpenPCBSlot() && oss_clock_->launchIntervalReached()) {
@@ -89,20 +90,19 @@ void OSS::Scheduler::terminateProcess() {
 
     Time current_time = oss_clock_->getCurrentTime();
 
-    current_process_running_->end_sec = current_time.sec;
-    current_process_running_->end_nano = current_time.nano;
+    current_process_running_.end_sec = current_time.sec;
+    current_process_running_.end_nano = current_time.nano;
     // output to log
-    completed_processes.push_back(*current_process_running_);
-    delete current_process_running_;
-    current_process_running_ = nullptr;
+    completed_processes.push_back(current_process_running_);
+    current_process_running_ = PCB{.pid = -1};
 }
 
 void OSS::Scheduler::updateProcessInReadyQueue() {
     if (!pcb_ready_queue_->isEmpty()) {
         PCB pcb = pcb_ready_queue_->dequeue();
-        current_process_running_ = &pcb;
+        current_process_running_ = pcb;
         // send message
-        msg_manager_->sendMessage(current_process_running_->pid, getpid(), ProcessStatus::OSS_CONTROL, -1, 0);
+        msg_manager_->sendMessage(current_process_running_.pid, getpid(), ProcessStatus::OSS_CONTROL, -1, 0);
 
 
 
@@ -124,5 +124,28 @@ void OSS::Scheduler::updateProcessInReadyQueue() {
             },
             0
         );
+    }
+}
+
+void OSS::Scheduler::cleanUp() {
+    if (current_process_running_.pid > 0) {
+        kill(current_process_running_.pid, SIGTERM);
+    }
+
+    for (auto &pcb : pcb_blocked_list) {
+        if (pcb.pid > 0) {
+            kill(pcb.pid, SIGTERM);
+        }
+
+        pcb_ready_queue_->traverse(
+            [](PCB *pcb) {
+                if (pcb->pid > 0) {
+                    kill(pcb->pid, SIGTERM);
+                }
+            }
+        );
+
+        int status = 0;
+        while (waitpid(-1, &status, 0) > 0) {}
     }
 }

@@ -9,7 +9,7 @@ ClockChecker::ClockChecker(int max_sec, int max_nano) {
 bool ClockChecker::isTimeReached() {
     Time current_time = *clock_->getCurrentTime();
     if (
-        (current_time.sec >= time_limit_.sec)
+        (current_time.sec > time_limit_.sec)
         ||
         (current_time.sec == time_limit_.sec && current_time.nano >= time_limit_.nano)
     ) {

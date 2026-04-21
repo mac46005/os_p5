@@ -133,6 +133,38 @@ void OSS::OssOutput::printOssErrorMessage(Error &error)
     std::cout << cb.build();
 }
 
+void OSS::OssOutput::printClock(OSSClock *clock) {
+    
+    Color::printInfo("OSS", clock->toString());
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void OSS::OssOutput::openLogFile()
 {
     log_file_.open(file_name_.c_str(), std::ios::out | std::ios::app);
