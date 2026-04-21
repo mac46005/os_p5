@@ -7,7 +7,9 @@
 #include "argument_error.hpp"
 #include "../error/error.hpp"
 #include "../color/ui.hpp"
+#include "pcb_queue.hpp"
 #include "oss_clock.hpp"
+#include "resource_manager.hpp"
 
 
 namespace OSS {

@@ -1,7 +1,7 @@
-#include "pcb.hpp"
+#pragma once
 #include <array>
 #include <vector>
-
+#include "pcb.hpp"
 namespace OSS
 {
     // STATS

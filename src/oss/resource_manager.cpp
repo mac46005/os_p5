@@ -78,7 +78,7 @@ void OSS::ResourceManager::incrementDeadlockKills() {
     deadlock_kills_++;
 }
 
-std::vector<int> OSS::ResourceManager::getDeadlockIndices(const std::vector<PCB> &blocked_list) {
+std::vector<int> OSS::ResourceManager::getDeadlockIndices(const std::vector<PCB> &blocked_list) const {
     const int m = RESOURCE_COUNT;
     const int n = static_cast<int>(blocked_list.size());
 
