@@ -26,12 +26,18 @@ OSS::OSS::OSS(int argc, char **argv)
 
                     resource_manager_ = new ResourceManager();
 
+                    msg_manager_ = new MsgManager("msgq.txt", 0644 | IPC_CREAT, pid_);
+
                     scheduler_ = new Scheduler(
                         options.maxProc,
                         options.maxSimul,
                         this->oss_clock_,
                         this->resource_manager_,
-                        this->oss_output_);
+                        this->oss_output_,
+                        this->msg_manager_
+                    );
+
+                    
                 }
             });
     }
@@ -65,7 +71,8 @@ int OSS::OSS::run()
                 (scheduler_->stillHaveChildrenToLaunch() || scheduler_->stillHaveChildrenInSystem()))
             {
                 scheduler_->launchChildrenIfAble();
-
+                scheduler_->canUnblockBlockedProcess();
+                scheduler_->updateProcessInReadyQueue();
                 oss_clock_->updateClockByQuantum();
             }
         }

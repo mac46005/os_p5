@@ -1,7 +1,7 @@
 #pragma once
 #include <sys/types.h>
 enum ProcessStatus {
-    TERMINATED,
+    TERMINATE,
     REQUEST,
     RELEASE,
     OSS_CONTROL

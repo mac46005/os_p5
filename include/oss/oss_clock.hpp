@@ -11,9 +11,10 @@ namespace OSS {
         Time oss_work_time_{0,0};
         Time child_time_limit_{0,0};
         Time child_launch_time_limit_{0,0};
-        Time current_child_launch_time_{0,0};
+        Time child_launch_time_{0,0};
 
-
+        bool is_launch_interval_time_reached_ = false;
+        void checkIfLaunchIntervalReached();
 
 
     public:
@@ -24,9 +25,13 @@ namespace OSS {
             int time_quantum_sec,
             int time_quantum_nano
         );
+
         void updateClockByQuantum();
         void updateOssTimeBy(Time time);
         Time getChildTimeLimit();
         Time getCurrentTime();
+        
+        void resetLaunchInterval();
+        bool launchIntervalReached();
     };
 }

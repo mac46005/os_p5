@@ -12,14 +12,13 @@ MsgManager::MsgManager(char *key, int permission, pid_t pid): permission_(permis
     }
 }
 
-void MsgManager::sendMessage(long mtype, pid_t sender_pid, ProcessStatus status, int time_slice_sec, int time_slice_nano, int message_flag) {
+void MsgManager::sendMessage(long mtype, pid_t sender_pid, ProcessStatus status, int resource, int message_flag) {
     MsgBuffer buf{};
 
     buf.mtype = mtype;
     buf.sender_pid = sender_pid;
     buf.status = status;
-    buf.time_slice_sec = time_slice_sec;
-    buf.time_slice_nano = time_slice_nano;
+    buf.resource = resource;
 
     if ((msgsnd(msqid_, &buf, sizeof(MsgBuffer) - sizeof(long), message_flag)) == -1) {
         throw Error("MsgManager", "sendMessage()", "Failed to msgsnd()", std::strerror(errno));

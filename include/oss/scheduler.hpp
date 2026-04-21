@@ -1,8 +1,10 @@
+#pragma once
 #include <vector>
 #include "pcb_queue.hpp"
 #include "oss_clock.hpp"
 #include "resource_manager.hpp"
 #include "oss_output.hpp"
+#include "../msg/msg_manager.hpp"
 
 namespace OSS {
     struct PCBInfo {
@@ -43,6 +45,7 @@ namespace OSS {
         OSSClock *oss_clock_;
         ResourceManager *resource_manager_;
         OssOutput *oss_output_;
+        MsgManager *msg_manager_;
 
 
 
@@ -55,10 +58,11 @@ namespace OSS {
         PCB *current_process_running_ = new PCB{.pid = -1};
         PCB createPCB(pid_t pid);
         void forkProcess();
+        void terminateProcess();
 
         
     public:
-        explicit Scheduler(int max_proc, int max_simul, OSSClock *oss_clock, ResourceManager *resource_manager, OssOutput *oss_output);
+        explicit Scheduler(int max_proc, int max_simul, OSSClock *oss_clock, ResourceManager *resource_manager, OssOutput *oss_output, MsgManager *msg_manager);
         
         bool stillHaveChildrenToLaunch();
         bool stillHaveChildrenInSystem();

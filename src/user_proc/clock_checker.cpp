@@ -15,7 +15,7 @@ bool ClockChecker::isTimeReached() {
     ) {
         return true;
     } else {
-        false;
+        return false;
     }
 }
 

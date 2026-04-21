@@ -5,8 +5,9 @@ OSS::Scheduler::Scheduler(
     int max_simul, 
     OSSClock *oss_clock, 
     ResourceManager * resource_manager, 
-    OssOutput *oss_output
-): oss_clock_(oss_clock), resource_manager_(resource_manager), oss_output_(oss_output) {
+    OssOutput *oss_output,
+    MsgManager *msg_manager
+): oss_clock_(oss_clock), resource_manager_(resource_manager), oss_output_(oss_output), msg_manager_(msg_manager) {
     pcb_info_.max_process_count_ = max_proc;
     pcb_info_.max_simultaneous_count_ = max_simul;
 }
@@ -61,7 +62,7 @@ bool OSS::Scheduler::stillHaveChildrenInSystem() {
 
 
 void OSS::Scheduler::launchChildrenIfAble() {
-    if (pcb_info_.hasOpenPCBSlot()) {
+    if (pcb_info_.hasOpenPCBSlot() && oss_clock_->launchIntervalReached()) {
         if (
             !pcb_info_.isSimulCountReached()
         ) {
@@ -73,9 +74,8 @@ void OSS::Scheduler::launchChildrenIfAble() {
             // ADD FLAG THAT LINEAR PROCESS RUN
             forkProcess();
         }
+        oss_clock_->resetLaunchInterval();
     }
-
-    // UPDATE OSS WORK TIME?
 
 }
 
@@ -83,6 +83,46 @@ void OSS::Scheduler::launchChildrenIfAble() {
 void OSS::Scheduler::canUnblockBlockedProcess() {
 
 }
+
+void OSS::Scheduler::terminateProcess() {
+    pcb_info_.pcb_count_--;
+
+    Time current_time = oss_clock_->getCurrentTime();
+
+    current_process_running_->end_sec = current_time.sec;
+    current_process_running_->end_nano = current_time.nano;
+    // output to log
+    completed_processes.push_back(*current_process_running_);
+    delete current_process_running_;
+    current_process_running_ = nullptr;
+}
+
 void OSS::Scheduler::updateProcessInReadyQueue() {
-    
+    if (!pcb_ready_queue_->isEmpty()) {
+        PCB pcb = pcb_ready_queue_->dequeue();
+        current_process_running_ = &pcb;
+        // send message
+        msg_manager_->sendMessage(current_process_running_->pid, getpid(), ProcessStatus::OSS_CONTROL, -1, 0);
+
+
+
+        // recieve message
+        msg_manager_->recieveMessage(
+            [this](MsgBuffer msg) {
+                switch (msg.status) {
+                    case ProcessStatus::REQUEST:{
+                        break;
+                    }
+                    case ProcessStatus::RELEASE:{
+                        break;
+                    }
+                    case ProcessStatus::TERMINATE:{
+                        terminateProcess();
+                        break;
+                    }
+                }
+            },
+            0
+        );
+    }
 }

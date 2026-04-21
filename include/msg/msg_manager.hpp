@@ -22,7 +22,7 @@ private:
 
 public:
     explicit MsgManager(char *key, int permission, pid_t pid);
-    void sendMessage(long mtype, pid_t sender_pid,ProcessStatus status,int time_slice_sec, int time_slice_nano, int messsage_flag);
+    void sendMessage(long mtype, pid_t sender_pid,ProcessStatus status,int resource, int messsage_flag);
     void recieveMessage(std::function<void(MsgBuffer)> message, int message_flag);
     // bool canRecieveMessage(std::function<void(MsgBuffer)> handler);
     void cleanUp();

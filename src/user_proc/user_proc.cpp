@@ -1,6 +1,9 @@
 #include "../../include/user_proc/user_proc.hpp"
 
 UserProcess::UserProcess(int argc, char **argv) {
+    pid_ = getpid();
+    ppid_ = getppid();
+
     argument_processor_ = new ArgumentProcessor(argc, argv);
 
     argument_processor_->process(
@@ -8,6 +11,8 @@ UserProcess::UserProcess(int argc, char **argv) {
             clock_checker_ = new ClockChecker(options.sec, options.nano);
         }
     );
+
+    msg_manager_ = new MsgManager("msgq.txt", 0644, pid_);
 }
 int UserProcess::run() {
     try {
@@ -16,6 +21,7 @@ int UserProcess::run() {
             if (clock_checker_->isTimeReached()) {
                 // send message to oss for terminating via time limit
                 Color::printInfo("UserProcess", "Time reached. Terminating...");
+                msg_manager_->sendMessage(ppid_, pid_, ProcessStatus::TERMINATE, -1, 0);
                 break;
             }
         }
