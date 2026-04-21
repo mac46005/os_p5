@@ -1,5 +1,11 @@
 #include "../../include/oss/oss_output.hpp"
-
+OSS::OssOutput::OssOutput(std::string file_name): file_name_(file_name) {
+    int fd = open(file_name_.c_str(), O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    if (fd == -1) {
+        throw std::runtime_error("OssOutput failed to open file " + file_name);
+    }
+    close(fd);
+}
 void OSS::OssOutput::appendOption(
     Color::ColorBuilder &cb,
     std::string option,
@@ -60,4 +66,21 @@ void OSS::OssOutput::printHelpMessage()
     appendOptionInfo(cb, "f", "logfile", "The name of the log file to output oss operations");
 
     std::cout << cb.build();
+}
+
+
+
+
+void OSS::OssOutput::openLogFile() {
+    log_file_.open(file_name_.c_str(), std::ios::out | std::ios::app);
+}
+
+void OSS::OssOutput::closeLogFile() {
+    log_file_.close();
+}
+
+void OSS::OssOutput::cleanUp() {
+    if (log_file_.is_open()) {
+        closeLogFile();
+    }
 }

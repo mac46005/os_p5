@@ -1,9 +1,10 @@
 #include <fstream>
 #include <sstream>
-#include "../color/ui.hpp"
+#include <fcntl.h>
+#include <unistd.h>
 #include "argument_error.hpp"
 #include "../error/error.hpp"
-
+#include "../color/ui.hpp"
 namespace OSS {
     class OssOutput {
     private:
@@ -20,12 +21,16 @@ namespace OSS {
         void printHelpMessage();
 
 
-
+        void openLogFile();
+        void closeLogFile();
         void logProcessRequest();
         void logGrantRequest();
         void logBlockProcess();
         void logResourceRelease();
         void logDeadlock();
         void logResourceTable();
+
+
+        void cleanUp();
     };
 }

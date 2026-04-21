@@ -1,12 +1,14 @@
 #pragma once
 #include "argument_processor.hpp"
 #include "oss_clock.hpp"
+#include "oss_output.hpp"
 
 namespace OSS {
     class OSS {
     private:
         pid_t pid_ = 0;
         bool needs_help_ = false;
+        OssOutput *oss_output_;
         ArgumentProcessor *argument_processor_;
         OSSClock *oss_clock_;
     public:

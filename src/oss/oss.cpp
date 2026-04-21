@@ -9,6 +9,8 @@ OSS::OSS::OSS(int argc, char **argv) {
                 if (options.needsHelp == true) {
                     needs_help_ = options.needsHelp;
                 } else {
+                    oss_output_ = new OssOutput(options.logFile);
+
                     oss_clock_ = new OSSClock(
                         "./src/oss/oss.cpp",
                         options.childTimeLimit,
@@ -16,6 +18,8 @@ OSS::OSS::OSS(int argc, char **argv) {
                         0,
                         1000000
                     );
+
+
                 }
             }
         );
@@ -31,12 +35,15 @@ OSS::OSS::OSS(int argc, char **argv) {
 
 int OSS::OSS::run() {
     if (needs_help_) {
-
+        oss_output_->printHelpMessage();
     } else {
         try {
-
-        } catch (Error &e) {
+            oss_output_->openLogFile();
             
+        } catch (Error &e) {
+
+        } catch (std::exception &e) {
+
         }
     }
 }
