@@ -49,27 +49,21 @@ void Clock::subtractTimeToPtrTime(Time *ptr_time, Time subtract_time) {
 }
 
 
-// WARNING WARNING WARNING WARNING WARNING WARNING
-// WARNING WARNING WARNING WARNING WARNING WARNING
-// WARNING WARNING WARNING WARNING WARNING WARNING
-// WARNING WARNING WARNING WARNING WARNING WARNING
-// WARNING WARNING WARNING WARNING WARNING WARNING
-// WARNING WARNING WARNING WARNING WARNING WARNING
 Time Clock::floatToTime(float time_f) {
     Time time{0,0};
-    int sec = static_cast<int>(time_f);
-    float decimal = time_f - sec;
-    decimal = decimal * 10;
-    int nano = static_cast<int>(decimal);
+    int sec = 0;
+    if (time_f >= 1.0) {
+        sec = static_cast<int>(time_f);
+    }
+
+    float nano_dec = time_f - sec;
+    int nano = (nano_dec * Clock::SECOND_TO_NANO);
     time.sec = sec;
     time.nano = nano;
+
     return time;
 }
-// WARNING WARNING WARNING WARNING WARNING WARNING
-// WARNING WARNING WARNING WARNING WARNING WARNING
-// WARNING WARNING WARNING WARNING WARNING WARNING
-// WARNING WARNING WARNING WARNING WARNING WARNING
-// WARNING WARNING WARNING WARNING WARNING WARNING
+
 void Clock::detach() {
     shmdt(current_time_);
 }

@@ -24,6 +24,19 @@ OSS::OSS::OSS(int argc, char **argv) {
     } catch (Error &e) {
 
     } catch (std::exception &e) {
-        
+
+    }
+}
+
+
+int OSS::OSS::run() {
+    if (needs_help_) {
+
+    } else {
+        try {
+
+        } catch (Error &e) {
+            
+        }
     }
 }

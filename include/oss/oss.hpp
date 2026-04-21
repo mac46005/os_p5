@@ -11,5 +11,6 @@ namespace OSS {
         OSSClock *oss_clock_;
     public:
         explicit OSS(int argc, char ** argv);
+        int run();
     };
 }
