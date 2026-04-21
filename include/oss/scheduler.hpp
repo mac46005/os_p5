@@ -75,6 +75,16 @@ namespace OSS {
         
         PCBQueue *getReadyQueue();
         // std::vector<PCB> getBlockedList();
+
+
+        void handleRequest(const MsgBuffer &msg);
+        void handleRelease(const MsgBuffer &msg);
+        void blockCurrentProcess(int resource);
+        void unblockProcessIfPossible();
+        void runDeadlockDetectionIfNeeded();
+        void resolveDeadlock();
+        PCB *findBlockedByPid(pid_t pid);
+
         void cleanUp();
     };
 }

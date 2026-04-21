@@ -22,7 +22,7 @@ OSS::OSS::OSS(int argc, char **argv)
                         options.childTimeLimit,
                         options.launchInterval,
                         0,
-                        100000);
+                        1000000);
 
                     resource_manager_ = new ResourceManager();
 

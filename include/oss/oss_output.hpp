@@ -15,6 +15,8 @@ namespace OSS {
     private:
         std::string file_name_;
         std::ofstream log_file_;
+        int lines_written_ = 0;
+        const int MAX_LINES = 10000;
         
         void appendOption(Color::ColorBuilder &cb, std::string option, std::string arg);
         void appendOptionInfo(Color::ColorBuilder &cb, std::string option, std::string arg, std::string description);
@@ -30,12 +32,12 @@ namespace OSS {
 
         void openLogFile();
         void closeLogFile();
-        void logProcessRequest();
-        void logGrantRequest();
-        void logBlockProcess();
-        void logResourceRelease();
-        void logDeadlock();
-        void logResourceTable();
+        void logProcessRequest(pid_t pid, int resource, OSSClock *clock);
+        void logGrantRequest(pid_t pid, int resource, OSSClock *clock);
+        void logBlockProcess(pid_t pid, int resource, OSSClock *clock);
+        void logResourceRelease(pid_t pid, int resource, OSSClock *clock);
+        void logDeadlock(const std::vector<PCB> &blocked, OSSClock *clock);
+        void logResourceTable(const std::vector<PCB> &blocked_list, PCBQueue *ready_queue, ResourceManager *resource_manager);
 
 
         void cleanUp();
