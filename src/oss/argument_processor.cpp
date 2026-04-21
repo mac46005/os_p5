@@ -37,7 +37,7 @@ void OSS::ArgumentProcessor::processOptions(std::function<void(Options)> useProc
                 break;
             case 't':
                 try {
-                    options.timeLimitForChildren = std::stof(optarg);
+                    options.childTimeLimit = std::stof(optarg);
                 } catch (std::exception &e) {
                     throw ArgumentError("t", "childTimeLimit", "Requires a valid decimal number");
                 }

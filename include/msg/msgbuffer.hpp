@@ -1,0 +1,17 @@
+#pragma once
+#include <sys/types.h>
+enum ProcessStatus {
+    TERMINATED,
+    REQUEST,
+    RELEASE,
+    OSS_CONTROL
+};
+struct MsgBuffer{
+    long mtype;
+    pid_t sender_pid;
+    // char str_data[100];
+    int resource;
+    int time_slice_nano;
+    ProcessStatus status;
+    // int is_done;
+};

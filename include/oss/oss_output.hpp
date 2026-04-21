@@ -1,3 +1,5 @@
+#pragma once
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <fcntl.h>
@@ -19,6 +21,8 @@ namespace OSS {
         explicit OssOutput(std::string file_name);
 
         void printHelpMessage();
+        void printArgumentErrorMessage(ArgumentError &argument_error);
+        void printOssErrorMessage(Error &error);
 
 
         void openLogFile();

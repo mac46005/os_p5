@@ -30,6 +30,12 @@ namespace OSS {
             }
             return false;
         }
+        inline bool hasChildrenInSystem() {
+            if (pcb_count_ > 0) {
+                return true;
+            }
+            return false;
+        }
     };
 
     class Scheduler {
@@ -59,10 +65,9 @@ namespace OSS {
 
         void launchChildrenIfAble();
         void launchProcess();
-        void canUnblockAdBlockedProcess();
-        void hasProcessInReadyQueue();
-         
-        void updatePCBState();
+        void canUnblockBlockedProcess();
+        void updateProcessInReadyQueue();
+        
         PCBQueue *getReadyQueue();
         std::vector<PCB> getBlockedList();
     };

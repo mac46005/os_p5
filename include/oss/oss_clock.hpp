@@ -23,7 +23,7 @@ namespace OSS {
             float child_launch_limit, 
             int time_quantum_sec,
             int time_quantum_nano
-        ) {}
+        );
         void updateClockByQuantum();
         void updateOssTimeBy(Time time);
         Time getChildTimeLimit();

@@ -1,14 +1,20 @@
 #include "../../include/oss/oss.hpp"
 
-OSS::OSS::OSS(int argc, char **argv) {
-    try {
+OSS::OSS::OSS(int argc, char **argv)
+{
+    try
+    {
         pid_ = getpid();
         argument_processor_ = new ArgumentProcessor(argc, argv);
         argument_processor_->processOptions(
-            [this](Options options) {
-                if (options.needsHelp == true) {
+            [this](Options options)
+            {
+                if (options.needsHelp == true)
+                {
                     needs_help_ = options.needsHelp;
-                } else {
+                }
+                else
+                {
                     oss_output_ = new OssOutput(options.logFile);
 
                     oss_clock_ = new OSSClock(
@@ -16,8 +22,7 @@ OSS::OSS::OSS(int argc, char **argv) {
                         options.childTimeLimit,
                         options.launchInterval,
                         0,
-                        1000000
-                    );
+                        1000000);
 
                     resource_manager_ = new ResourceManager();
 
@@ -26,39 +31,54 @@ OSS::OSS::OSS(int argc, char **argv) {
                         options.maxSimul,
                         this->oss_clock_,
                         this->resource_manager_,
-                        this->oss_output_
-                    );
+                        this->oss_output_);
                 }
-            }
-        );
-    } catch (ArgumentError &e) {
-
-    } catch (Error &e) {
-
-    } catch (std::exception &e) {
-
+            });
+    }
+    catch (ArgumentError &e)
+    {
+        oss_output_->printArgumentErrorMessage(e);
+    }
+    catch (Error &e)
+    {
+        oss_output_->printOssErrorMessage(e);
+    }
+    catch (std::exception &e)
+    {
+        Color::printError("OSS::OSS::OSS(int argc, char **argv)", e.what(), std::string(std::strerror(errno)));
     }
 }
 
-
-int OSS::OSS::run() {
-    if (needs_help_) {
+int OSS::OSS::run()
+{
+    if (needs_help_)
+    {
         oss_output_->printHelpMessage();
-    } else {
-        try {
+    }
+    else
+    {
+        try
+        {
             oss_output_->openLogFile();
-            
+
             while (
-                (scheduler_->stillHaveChildrenToLaunch() || scheduler_->stillHaveChildrenInSystem())
-            ) {
+                (scheduler_->stillHaveChildrenToLaunch() || scheduler_->stillHaveChildrenInSystem()))
+            {
                 scheduler_->launchChildrenIfAble();
 
-                
+                oss_clock_->updateClockByQuantum();
             }
-        } catch (Error &e) {
-
-        } catch (std::exception &e) {
-
         }
+        catch (Error &e)
+        {
+            return EXIT_FAILURE;
+        }
+        catch (std::exception &e)
+        {
+            return EXIT_FAILURE;
+        }
+        
     }
+
+    return EXIT_SUCCESS;
 }

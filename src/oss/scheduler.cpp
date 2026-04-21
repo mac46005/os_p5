@@ -23,7 +23,11 @@ OSS::PCB OSS::Scheduler::createPCB(pid_t pid) {
 }
 
 void OSS::Scheduler::forkProcess() {
+    Time current_time = oss_clock_->getCurrentTime();
+
     Time child_time_limit_ = oss_clock_->getChildTimeLimit();
+    Clock::addTimeToPtrTime(&child_time_limit_, current_time);
+
     std::string child_runtime_sec_str = std::to_string(child_time_limit_.sec);
     std::string child_runtime_nano_str = std::to_string(child_time_limit_.nano);
 
@@ -48,7 +52,12 @@ void OSS::Scheduler::forkProcess() {
     }
 }
 
-
+bool OSS::Scheduler::stillHaveChildrenToLaunch() {
+    return !pcb_info_.isProcCountReached();
+}
+bool OSS::Scheduler::stillHaveChildrenInSystem() {
+    return pcb_info_.hasChildrenInSystem();
+}
 
 
 void OSS::Scheduler::launchChildrenIfAble() {
@@ -67,5 +76,13 @@ void OSS::Scheduler::launchChildrenIfAble() {
     }
 
     // UPDATE OSS WORK TIME?
+
+}
+
+
+void OSS::Scheduler::canUnblockBlockedProcess() {
+
+}
+void OSS::Scheduler::updateProcessInReadyQueue() {
     
 }
