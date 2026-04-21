@@ -14,6 +14,22 @@ OSS::OSSClock::OSSClock(
 
 
 void OSS::OSSClock::updateClockByQuantum() {
-    Time *global_time = clock->getCurrentTime();
+    Time *global_time = clock_->getCurrentTime();
     Clock::addTimeToPtrTime(global_time, time_quantum_);
+}
+
+
+// DO I NEED THIS?
+void OSS::OSSClock::updateOssTimeBy(Time time) {
+
+}
+///
+
+Time OSS::OSSClock::getChildTimeLimit() {
+    return child_time_limit_;
+}
+
+Time OSS::OSSClock::getCurrentTime() {
+    Time current_time = *clock_->getCurrentTime();
+    return current_time;
 }

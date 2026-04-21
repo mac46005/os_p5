@@ -4,7 +4,7 @@
 namespace OSS {
     class OSSClock {
     private:
-        Clock *clock;
+        Clock *clock_;
 
 
         Time time_quantum_{0,0};
@@ -26,6 +26,7 @@ namespace OSS {
         ) {}
         void updateClockByQuantum();
         void updateOssTimeBy(Time time);
-        
+        Time getChildTimeLimit();
+        Time getCurrentTime();
     };
 }

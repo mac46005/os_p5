@@ -19,7 +19,15 @@ OSS::OSS::OSS(int argc, char **argv) {
                         1000000
                     );
 
+                    resource_manager_ = new ResourceManager();
 
+                    scheduler_ = new Scheduler(
+                        options.maxProc,
+                        options.maxSimul,
+                        this->oss_clock_,
+                        this->resource_manager_,
+                        this->oss_output_
+                    );
                 }
             }
         );
@@ -40,6 +48,13 @@ int OSS::OSS::run() {
         try {
             oss_output_->openLogFile();
             
+            while (
+                (scheduler_->stillHaveChildrenToLaunch() || scheduler_->stillHaveChildrenInSystem())
+            ) {
+                scheduler_->launchChildrenIfAble();
+
+                
+            }
         } catch (Error &e) {
 
         } catch (std::exception &e) {
