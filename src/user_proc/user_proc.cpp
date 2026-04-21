@@ -18,13 +18,23 @@ int UserProcess::run() {
     try {
         Color::printInfo("UserProcess", "running...");
         while(true) {
+            msg_manager_->recieveMessage(
+                [this](MsgBuffer msg) {
+                    Color::printInfo("UserProcess", "Recieved message from OSS");
+                },
+                0
+            );
+
             if (clock_checker_->isTimeReached()) {
                 // send message to oss for terminating via time limit
                 Color::printInfo("UserProcess", "Time reached. Terminating...");
                 msg_manager_->sendMessage(ppid_, pid_, ProcessStatus::TERMINATE, -1, 0);
                 break;
             }
+
+            msg_manager_->sendMessage(ppid_, pid_, ProcessStatus::REQUEST, -1, 0);
         }
+        Color::printInfo("UserProcess", "Terminating...");
 
         cleanUp();
     } catch (std::exception &e) {

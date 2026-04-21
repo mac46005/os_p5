@@ -109,8 +109,10 @@ void OSS::Scheduler::updateProcessInReadyQueue() {
         // recieve message
         msg_manager_->recieveMessage(
             [this](MsgBuffer msg) {
+                Color::printInfo("OSS", "Message recieved...");
                 switch (msg.status) {
                     case ProcessStatus::REQUEST:{
+                        pcb_ready_queue_->enqueue(current_process_running_);
                         break;
                     }
                     case ProcessStatus::RELEASE:{

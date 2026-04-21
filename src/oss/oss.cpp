@@ -22,7 +22,7 @@ OSS::OSS::OSS(int argc, char **argv)
                         options.childTimeLimit,
                         options.launchInterval,
                         0,
-                        1000000);
+                        100000);
 
                     resource_manager_ = new ResourceManager();
 
@@ -71,7 +71,6 @@ int OSS::OSS::run()
                 !g_timeout && !g_stop &&
                 (scheduler_->stillHaveChildrenToLaunch() || scheduler_->stillHaveChildrenInSystem() ))
             {
-                Color::printInfo("OSS", "in cycle");
                 scheduler_->launchChildrenIfAble();
                 scheduler_->canUnblockBlockedProcess();
                 scheduler_->updateProcessInReadyQueue();
