@@ -75,7 +75,16 @@ int OSS::OSS::run()
                 scheduler_->canUnblockBlockedProcess();
                 scheduler_->updateProcessInReadyQueue();
                 oss_clock_->updateClockByQuantum();
-                oss_output_->printClock(oss_clock_);
+
+                if (shouldPrintTables()) {
+                    oss_output_->logSystemTables(
+                        scheduler_->getBlockedList(),
+                        scheduler_->getReadyQueue(),
+                        scheduler_->getCurrentProcessingRunning(),
+                        resource_manager_,
+                        oss_clock_
+                    );
+                }
             }
         }
         catch (Error &e)

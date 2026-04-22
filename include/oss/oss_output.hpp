@@ -42,7 +42,14 @@ namespace OSS {
         void logDeadlock(const std::vector<PCB> &blocked, OSSClock *clock);
         void logResourceTable(const std::vector<PCB> &blocked_list, PCBQueue *ready_queue, ResourceManager *resource_manager);
         void logTerminateProcess(pid_t pid, OSSClock *clock);
-        void OSS::OssOutput::logUnblockProcess(pid_t pid, int resource, OSSClock *clock);
+        void logUnblockProcess(pid_t pid, int resource, OSSClock *clock);
+        void logSystemTables(
+            const std::vector<PCB> &blocked_list,
+            PCBQueue *ready_queue,
+            const PCB &current_process_running,
+            ResourceManager *resource_manager,
+            OSSClock *clock
+        );
         void cleanUp();
     };
 }

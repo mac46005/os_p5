@@ -75,7 +75,8 @@ namespace OSS {
         void updateProcessInReadyQueue();
         
         PCBQueue *getReadyQueue();
-        // std::vector<PCB> getBlockedList();
+        std::vector<PCB> getBlockedList();
+        PCB getCurrentProcessingRunning();
 
 
         void requeueCurrentProcess();
