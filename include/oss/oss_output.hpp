@@ -10,9 +10,11 @@
 #include "pcb_queue.hpp"
 #include "oss_clock.hpp"
 #include "resource_manager.hpp"
+#include "scheduler.hpp"
 
 
 namespace OSS {
+    class Scheduler;
     class OssOutput {
     private:
         std::string file_name_;
@@ -49,6 +51,10 @@ namespace OSS {
             const PCB &current_process_running,
             ResourceManager *resource_manager,
             OSSClock *clock
+        );
+        void logFinalReport(
+            ResourceManager *resource_manager,
+            Scheduler *scheduler
         );
         void cleanUp();
     };

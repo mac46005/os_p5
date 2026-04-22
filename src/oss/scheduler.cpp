@@ -101,7 +101,9 @@ void OSS::Scheduler::launchChildrenIfAble()
     }
 }
 
-
+std::vector<OSS::PCB> OSS::Scheduler::getCompletedProcesses() const {
+    return completed_processes;
+}
 OSS::PCBQueue *OSS::Scheduler::getReadyQueue() {
     return pcb_ready_queue_;
 }
@@ -146,6 +148,7 @@ void OSS::Scheduler::canUnblockBlockedProcess()
             if (resource_manager_->grant(pcb, resource)) {
                 // log unblock/grant here
                 oss_output_->logUnblockProcess(pcb.pid, resource, oss_clock_);
+                msg_manager_->sendMessage(pcb.pid, getpid(), ProcessStatus::GRANTED, resource, 0);
                 pcb_ready_queue_->enqueue(pcb);
             } else {
                 still_blocked.push_back(pcb);
@@ -191,6 +194,7 @@ void OSS::Scheduler::handleRequest(const MsgBuffer &msg) {
     if (resource_manager_->grant(current_process_running_, resource)) {
         // log output here
         oss_output_->logGrantRequest(current_process_running_.pid, resource, oss_clock_);
+        msg_manager_->sendMessage(current_process_running_.pid, getpid(), ProcessStatus::GRANTED, resource, 0);
         requeueCurrentProcess();
     } else {
         oss_output_->logBlockProcess(current_process_running_.pid, resource, oss_clock_);
@@ -397,4 +401,6 @@ void OSS::Scheduler::cleanUp()
 
     int status = 0;
     while (waitpid(-1, &status, 0) > 0){};
+
+    delete pcb_ready_queue_;
 }

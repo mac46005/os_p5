@@ -284,7 +284,36 @@ void OSS::OssOutput::logSystemTables(
 
 
 
+void OSS::OssOutput::logFinalReport(ResourceManager *resource_manager, Scheduler * scheduler) {
+    std::vector<PCB> completed_processes = scheduler->getCompletedProcesses();
+    int total_completed_processes = static_cast<int>(completed_processes.size());
+    int total_requests = resource_manager->getTotalRequests();
+    int granted_immediately = resource_manager->getGrantedImmediately();
+    int deadlock_runs = resource_manager->getDeadlockRuns();
+    int deadlock_kills = resource_manager->getDeadlockKills();
 
+    double granted_percent = 0.0;
+    if (total_requests > 0) {
+        granted_percent = (static_cast<double>(granted_immediately) / static_cast<double>(total_requests)) * 100.0;
+    }
+
+    writeLine("#######################################################");
+    writeLine("FINAL REPORT");
+    writeLine("#######################################################");
+    writeLine("Total completed processes: " + std::to_string(total_completed_processes));
+    writeLine("Total resource requests: " + std::to_string(total_requests));
+    writeLine("Total deadlock detection runs: " + std::to_string(deadlock_runs));
+    writeLine("Total processes terminated due to deadlock: " + std::to_string(deadlock_kills));
+    writeLine("Requests granted immediately: " + std::to_string(granted_immediately));
+    writeLine("Immediate grant percentage: " + std::to_string(granted_percent));
+    writeLine("#######################################################");
+    writeLine("PROCESS LIST");
+
+    for(auto pcb : completed_processes) {
+        writeLine("PID: " + std::to_string(pcb.pid) + "\tstart: " + std::to_string(pcb.start_sec) + ":" + std::to_string(pcb.start_nano) + "\tend: " + std::to_string(pcb.end_sec) + ":" + std::to_string(pcb.end_nano));
+    }
+
+}
 
 
 

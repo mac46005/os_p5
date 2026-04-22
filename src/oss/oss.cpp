@@ -105,14 +105,25 @@ int OSS::OSS::run()
         
     }
     Color::printInfo("OSS", "Terminating...");
+    oss_output_->logFinalReport(resource_manager_, scheduler_);
     cleanUp();
     return EXIT_SUCCESS;
 }
 
 
 void OSS::OSS::cleanUp() {
+    
+
     oss_clock_->cleanUp();
     msg_manager_->cleanUp();
     oss_output_->cleanUp();
+    scheduler_->cleanUp();
+
+    delete scheduler_;
+    delete resource_manager_;
+    delete msg_manager_;
+    delete oss_clock_;
+    delete oss_output_;
+
 }
 

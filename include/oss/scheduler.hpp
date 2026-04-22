@@ -9,6 +9,8 @@
 #include "pcb.hpp"
 
 namespace OSS {
+    class OssOutput;
+    
     struct PCBInfo {
         int max_process_count_ = 0;
         int max_simultaneous_count_ = 0;
@@ -75,6 +77,7 @@ namespace OSS {
         void canUnblockBlockedProcess();
         void updateProcessInReadyQueue();
         
+        std::vector<PCB> getCompletedProcesses() const;
         PCBQueue *getReadyQueue();
         std::vector<PCB> getBlockedList();
         PCB getCurrentProcessingRunning();

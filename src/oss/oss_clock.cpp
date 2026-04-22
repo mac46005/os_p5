@@ -39,15 +39,15 @@ Time OSS::OSSClock::getCurrentTime()
 
 
 Time OSS::OSSClock::generateRandomTimeFromBoundTimeLimit(Time bound_time) {
-    static thread_local std::mt19937 rng{blocked_seed_};
-    std::uniform_real_distribution<int> dist(0, bound_time.sec);
+    thread_local std::mt19937 rng{blocked_seed_};
+    std::uniform_int_distribution<int> sec_dist(0, bound_time.sec);
     
     
     
     Time random_time;
-    random_time.sec = dist(rng);
-    std::uniform_real_distribution<int> dist(0, bound_time.nano);
-    random_time.nano = dist(rng);
+    random_time.sec = sec_dist(rng);
+    std::uniform_int_distribution<int> nano_dist(0, bound_time.nano);
+    random_time.nano = nano_dist(rng);
     blocked_seed_++;
 
     return random_time;
