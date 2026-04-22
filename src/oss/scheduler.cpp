@@ -19,7 +19,8 @@ OSS::PCB OSS::Scheduler::createPCB(pid_t pid)
     OSS::PCB pcb{
         .pid = pid,
         .start_sec = current_time.sec,
-        .start_nano = current_time.nano
+        .start_nano = current_time.nano,
+        .requested_resource = -1
     };
 
     for (auto &i : pcb.resource_allocated) {
@@ -60,6 +61,7 @@ void OSS::Scheduler::forkProcess()
         pcb_ready_queue_->enqueue(pcb);
 
         // output to log
+        oss_output_->logProcessLaunch(pid, oss_clock_);
     }
 }
 
@@ -123,19 +125,17 @@ void OSS::Scheduler::canUnblockBlockedProcess()
 {
     std::vector<PCB> still_blocked;
 
-    for (auto &pcb : pcb_blocked_list) {
-        int resource = pcb.requested_resource;
         for (auto &pcb : pcb_blocked_list) {
             int resource = pcb.requested_resource;
 
             if (resource_manager_->grant(pcb, resource)) {
                 // log unblock/grant here
+                oss_output_->logUnblockProcess(pcb.pid, resource, oss_clock_);
                 pcb_ready_queue_->enqueue(pcb);
             } else {
                 still_blocked.push_back(pcb);
             }
         }
-    }
 
     pcb_blocked_list = still_blocked;
 }
@@ -151,6 +151,7 @@ void OSS::Scheduler::terminateProcess()
     current_process_running_.end_sec = current_time.sec;
     current_process_running_.end_nano = current_time.nano;
     // output to log
+    oss_output_->logTerminateProcess(current_process_running_.pid, oss_clock_);
     completed_processes.push_back(current_process_running_);
     
     current_process_running_ = PCB{.pid = -1};
@@ -162,11 +163,13 @@ void OSS::Scheduler::terminateProcess()
 
 void OSS::Scheduler::handleRequest(const MsgBuffer &msg) {
     int resource = msg.resource;
-
+    oss_output_->logProcessRequest(current_process_running_.pid, resource, oss_clock_);
     if (resource_manager_->grant(current_process_running_, resource)) {
         // log output here
+        oss_output_->logGrantRequest(current_process_running_.pid, resource, oss_clock_);
         requeueCurrentProcess();
     } else {
+        oss_output_->logBlockProcess(current_process_running_.pid, resource, oss_clock_);
         blockCurrentProcess(resource);
     }
 }
@@ -177,7 +180,7 @@ void OSS::Scheduler::handleRelease(const MsgBuffer &msg) {
     resource_manager_->releaseOne(current_process_running_, resource);
 
     // log output here
-
+    oss_output_->logResourceRelease(current_process_running_.pid, resource, oss_clock_);
     requeueCurrentProcess();
     canUnblockBlockedProcess();
 }
@@ -228,29 +231,24 @@ void OSS::Scheduler::updateProcessInReadyQueue()
 
 void OSS::Scheduler::cleanUp()
 {
-    if (current_process_running_.pid > 0)
-    {
+    if (current_process_running_.pid > 0) {
         kill(current_process_running_.pid, SIGTERM);
     }
 
-    for (auto &pcb : pcb_blocked_list)
-    {
-        if (pcb.pid > 0)
-        {
+    for (auto &pcb : pcb_blocked_list) {
+        if (pcb.pid > 0) {
             kill(pcb.pid, SIGTERM);
         }
-
-        int status = 0;
-        while (waitpid(-1, &status, 0) > 0)
-        {
-        }
     }
+
     pcb_ready_queue_->traverse(
-        [](PCB *pcb)
-        {
-            if (pcb->pid > 0)
-            {
+        [](PCB *pcb) {
+            if (pcb->pid > 0) {
                 kill(pcb->pid, SIGTERM);
             }
-        });
+        }
+    );
+
+    int status = 0;
+    while (waitpid(-1, &status, 0) > 0){};
 }

@@ -21,7 +21,7 @@ private:
     pid_t pid_;
 
 public:
-    explicit MsgManager(char *key, int permission, pid_t pid);
+    explicit MsgManager(const char *key, int permission, pid_t pid);
     void sendMessage(long mtype, pid_t sender_pid,ProcessStatus status,int resource, int messsage_flag);
     void recieveMessage(std::function<void(MsgBuffer)> message, int message_flag);
     // bool canRecieveMessage(std::function<void(MsgBuffer)> handler);

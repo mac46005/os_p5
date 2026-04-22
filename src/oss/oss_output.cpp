@@ -175,6 +175,50 @@ void OSS::OssOutput::closeLogFile()
     log_file_.close();
 }
 
+
+
+void OSS::OssOutput::writeLine(const std::string &line) {
+    std::cout << line << std::endl;
+
+    if (log_file_.is_open() && file_line_count_ < MAX_LINES) {
+        log_file_ << line << std::endl;
+        file_line_count_++;
+    }
+}
+
+void OSS::OssOutput::logProcessLaunch(pid_t pid, OSSClock *clock) {
+    writeLine("OSS launched process pid " + std::to_string(pid) + " at time " + clock->toString());
+}
+
+void OSS::OssOutput::logProcessRequest(pid_t pid, int resource, OSSClock *clock) {
+    writeLine("OSS has detected pid " + std::to_string(pid) + "requesting R" + std::to_string(resource) + " at time " + clock->toString());
+}
+void OSS::OssOutput::logGrantRequest(pid_t pid, int resource, OSSClock *clock) {
+    writeLine("OSS granting pid " + std::to_string(pid) + " request for R" + std::to_string(resource) + " at time " + clock->toString());
+}
+void OSS::OssOutput::logBlockProcess(pid_t pid, int resource, OSSClock *clock) {
+    writeLine("OSS blocking pid " + std::to_string(pid) + " waiting for R" + std::to_string(resource) + " at time " + clock->toString());
+}
+void OSS::OssOutput::logResourceRelease(pid_t pid, int resource, OSSClock *clock) {
+    writeLine("OSS has acknowledged pid " + std::to_string(pid) + " releasing R" + std::to_string(resource) + " at time " + clock->toString());
+}
+void OSS::OssOutput::logTerminateProcess(pid_t pid, OSSClock *clock){
+    writeLine("OSS has acknowledged pid " + std::to_string(pid) + " terminating at time " + clock->toString());
+}
+void OSS::OssOutput::logUnblockProcess(pid_t pid, int resource, OSSClock *clock) {
+    writeLine("OSS unblocked pid " + std::to_string(pid) + " and granted R" + std::to_string(resource) + " at time " + clock->toString());
+}
+
+
+
+
+
+
+
+
+
+
+
 void OSS::OssOutput::cleanUp()
 {
     if (log_file_.is_open())

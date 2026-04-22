@@ -1,6 +1,6 @@
 #include "../../include/msg/msg_manager.hpp"
 
-MsgManager::MsgManager(char *key, int permission, pid_t pid): permission_(permission), pid_(pid) {
+MsgManager::MsgManager(const char *key, int permission, pid_t pid): permission_(permission), pid_(pid) {
     if ((key_ = ftok(key, 1)) == -1) {
         throw Error("MsgManager", "MsgManager()", "Failed to ftok()", std::strerror(errno));
         // throw std::runtime_error(std::string("MsgManager FAILED to ftok() in MsgManager::MsgManager()\n") + std::string(std::strerror(errno)));
