@@ -4,7 +4,9 @@ enum ProcessStatus {
     TERMINATE,
     REQUEST,
     RELEASE,
-    OSS_CONTROL
+    OSS_CONTROL,
+    GRANTED,
+    DENIED
 };
 struct MsgBuffer{
     long mtype;
