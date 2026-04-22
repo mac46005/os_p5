@@ -15,6 +15,7 @@ namespace OSS
         static constexpr int RESOURCE_COUNT = 10;
         static constexpr int INSTANCES_PER_RESOURCE = 5;
 
+
         std::array<int, RESOURCE_COUNT> total_{};
         std::array<int, RESOURCE_COUNT> available_{};
 

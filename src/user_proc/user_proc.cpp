@@ -27,7 +27,7 @@ bool UserProcess::hasAnyHeldResources() {
     return false;
 }
 
-int UserProcess::chooseReleaseResource() {
+int UserProcess::chooseRequestResource() {
 
     // may need to change this to see if resource is more than 5 
     return rand() % 10;

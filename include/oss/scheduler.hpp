@@ -49,7 +49,7 @@ namespace OSS {
         OssOutput *oss_output_;
         MsgManager *msg_manager_;
 
-
+        bool is_running_linear_process_ = false;
 
         PCBInfo pcb_info_{};
 

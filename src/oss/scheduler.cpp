@@ -88,6 +88,7 @@ void OSS::Scheduler::launchChildrenIfAble()
             !pcb_info_.isProcCountReached())
         {
             // ADD FLAG THAT LINEAR PROCESS RUN
+            is_running_linear_process_ = true;
             forkProcess();
         }
         oss_clock_->resetLaunchInterval();

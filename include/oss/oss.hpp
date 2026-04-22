@@ -18,12 +18,20 @@ namespace OSS {
         Scheduler *scheduler_;
         MsgManager *msg_manager_;
         Time next_table_dump_{0, 500000000};
+        Time next_deadlock_check_{1,0};
         inline bool shouldPrintTables() {
             Time now = oss_clock_->getCurrentTime();
             return (now.sec > next_table_dump_.sec) || (now.sec == next_table_dump_.sec && now.nano >= next_table_dump_.nano);
         }
         inline void advanceNextTableDump() {
             Clock::addTimeToPtrTime(&next_table_dump_, Time{0, 500000000});
+        }
+        inline bool shouldResolveDeadlock() {
+            Time now = oss_clock_->getCurrentTime();
+            return (now.sec > next_deadlock_check_.sec) || (now.sec == next_deadlock_check_.sec && now.nano >= next_deadlock_check_.nano);
+        }
+        inline void advanceNextDeadlockResolve() {
+            Clock::addTimeToPtrTime(&next_deadlock_check_, Time{1,0});
         }
     public:
         explicit OSS(int argc, char ** argv);

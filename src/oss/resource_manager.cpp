@@ -82,27 +82,37 @@ std::vector<int> OSS::ResourceManager::getDeadlockIndices(const std::vector<PCB>
     const int m = RESOURCE_COUNT;
     const int n = static_cast<int>(blocked_list.size());
 
+    // if no blocked process no deadlock
     if (n == 0) {
         return {};
     }
 
+    // get current available resources
     std::vector<int> work(available_.begin(), available_.end());
+    // assume all blocked processes cant finish
     std::vector<bool> finish(n, false);
 
+
+    // loop as long as we find at least one blocked process that could finish
     bool progress = true;
     while (progress) {
         progress = false;
         for (int p = 0; p < n; p++) {
+            // skip any process already marked as finishabe
             if (finish[p]) {
                 continue;
             }
 
+            // work with process requested resource
             int req_res = blocked_list[p].requested_resource;
             bool can_finish = false;
 
+            // if there requested resource is available process can get it and finish
             if (req_res >= 0 && req_res < m) {
                 can_finish = (work[req_res] >= 1);
             }
+
+            
 
             if (can_finish) {
                 finish[p] = true;

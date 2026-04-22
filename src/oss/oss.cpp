@@ -86,6 +86,11 @@ int OSS::OSS::run()
                     );
                     advanceNextTableDump();
                 }
+
+                if (shouldResolveDeadlock()) {
+                    scheduler_->resolveDeadlock();
+                    advanceNextDeadlockResolve();
+                }
             }
         }
         catch (Error &e)

@@ -1,0 +1,369 @@
+OSS launched process pid 139479 at time 0:0
+OSS has acknowledged pid 139479 releasing R6 at time 0:0
+OSS has acknowledged pid 139479 releasing R5 at time 0:1000000
+OSS has acknowledged pid 139479 releasing R5 at time 0:2000000
+OSS has acknowledged pid 139479 releasing R2 at time 0:3000000
+OSS has detected pid 139479requesting R1 at time 0:4000000
+OSS granting pid 139479 request for R1 at time 0:4000000
+OSS has detected pid 139479requesting R7 at time 0:5000000
+OSS granting pid 139479 request for R7 at time 0:5000000
+OSS has acknowledged pid 139479 releasing R9 at time 0:6000000
+OSS has detected pid 139479requesting R6 at time 0:7000000
+OSS granting pid 139479 request for R6 at time 0:7000000
+OSS has detected pid 139479requesting R6 at time 0:8000000
+OSS granting pid 139479 request for R6 at time 0:8000000
+OSS has acknowledged pid 139479 releasing R6 at time 0:9000000
+OSS has detected pid 139479requesting R8 at time 0:10000000
+OSS granting pid 139479 request for R8 at time 0:10000000
+OSS has detected pid 139479requesting R9 at time 0:11000000
+OSS granting pid 139479 request for R9 at time 0:11000000
+OSS has acknowledged pid 139479 releasing R0 at time 0:12000000
+OSS has detected pid 139479requesting R3 at time 0:13000000
+OSS granting pid 139479 request for R3 at time 0:13000000
+OSS has detected pid 139479requesting R5 at time 0:14000000
+OSS granting pid 139479 request for R5 at time 0:14000000
+OSS has detected pid 139479requesting R2 at time 0:15000000
+OSS granting pid 139479 request for R2 at time 0:15000000
+OSS has detected pid 139479requesting R8 at time 0:16000000
+OSS granting pid 139479 request for R8 at time 0:16000000
+OSS has detected pid 139479requesting R7 at time 0:17000000
+OSS granting pid 139479 request for R7 at time 0:17000000
+OSS has acknowledged pid 139479 releasing R6 at time 0:18000000
+OSS has detected pid 139479requesting R2 at time 0:19000000
+OSS granting pid 139479 request for R2 at time 0:19000000
+OSS has detected pid 139479requesting R3 at time 0:20000000
+OSS granting pid 139479 request for R3 at time 0:20000000
+OSS has detected pid 139479requesting R9 at time 0:21000000
+OSS granting pid 139479 request for R9 at time 0:21000000
+OSS has acknowledged pid 139479 releasing R7 at time 0:22000000
+OSS has acknowledged pid 139479 releasing R4 at time 0:23000000
+OSS has detected pid 139479requesting R0 at time 0:24000000
+OSS granting pid 139479 request for R0 at time 0:24000000
+OSS has detected pid 139479requesting R6 at time 0:25000000
+OSS granting pid 139479 request for R6 at time 0:25000000
+OSS has acknowledged pid 139479 releasing R0 at time 0:26000000
+OSS has detected pid 139479requesting R3 at time 0:27000000
+OSS granting pid 139479 request for R3 at time 0:27000000
+OSS has detected pid 139479requesting R0 at time 0:28000000
+OSS granting pid 139479 request for R0 at time 0:28000000
+OSS has acknowledged pid 139479 releasing R1 at time 0:29000000
+OSS has detected pid 139479requesting R5 at time 0:30000000
+OSS granting pid 139479 request for R5 at time 0:30000000
+OSS has acknowledged pid 139479 releasing R7 at time 0:31000000
+OSS has detected pid 139479requesting R5 at time 0:32000000
+OSS granting pid 139479 request for R5 at time 0:32000000
+OSS has detected pid 139479requesting R9 at time 0:33000000
+OSS granting pid 139479 request for R9 at time 0:33000000
+OSS has detected pid 139479requesting R7 at time 0:34000000
+OSS granting pid 139479 request for R7 at time 0:34000000
+OSS has detected pid 139479requesting R5 at time 0:35000000
+OSS granting pid 139479 request for R5 at time 0:35000000
+OSS has acknowledged pid 139479 releasing R5 at time 0:36000000
+OSS has detected pid 139479requesting R7 at time 0:37000000
+OSS granting pid 139479 request for R7 at time 0:37000000
+OSS has detected pid 139479requesting R4 at time 0:38000000
+OSS granting pid 139479 request for R4 at time 0:38000000
+OSS has detected pid 139479requesting R0 at time 0:39000000
+OSS granting pid 139479 request for R0 at time 0:39000000
+OSS has acknowledged pid 139479 releasing R8 at time 0:40000000
+OSS has acknowledged pid 139479 releasing R8 at time 0:41000000
+OSS has acknowledged pid 139479 releasing R4 at time 0:42000000
+OSS has detected pid 139479requesting R1 at time 0:43000000
+OSS granting pid 139479 request for R1 at time 0:43000000
+OSS has detected pid 139479requesting R9 at time 0:44000000
+OSS granting pid 139479 request for R9 at time 0:44000000
+OSS has detected pid 139479requesting R0 at time 0:45000000
+OSS granting pid 139479 request for R0 at time 0:45000000
+OSS has acknowledged pid 139479 releasing R8 at time 0:46000000
+OSS has detected pid 139479requesting R2 at time 0:47000000
+OSS granting pid 139479 request for R2 at time 0:47000000
+OSS has detected pid 139479requesting R6 at time 0:48000000
+OSS granting pid 139479 request for R6 at time 0:48000000
+OSS has acknowledged pid 139479 releasing R9 at time 0:49000000
+OSS has acknowledged pid 139479 releasing R0 at time 0:50000000
+OSS has detected pid 139479requesting R8 at time 0:51000000
+OSS granting pid 139479 request for R8 at time 0:51000000
+OSS has detected pid 139479requesting R1 at time 0:52000000
+OSS granting pid 139479 request for R1 at time 0:52000000
+OSS has acknowledged pid 139479 releasing R2 at time 0:53000000
+OSS has detected pid 139479requesting R2 at time 0:54000000
+OSS granting pid 139479 request for R2 at time 0:54000000
+OSS has detected pid 139479requesting R6 at time 0:55000000
+OSS granting pid 139479 request for R6 at time 0:55000000
+OSS has detected pid 139479requesting R0 at time 0:56000000
+OSS granting pid 139479 request for R0 at time 0:56000000
+OSS has acknowledged pid 139479 releasing R1 at time 0:57000000
+OSS has detected pid 139479requesting R9 at time 0:58000000
+OSS granting pid 139479 request for R9 at time 0:58000000
+OSS has detected pid 139479requesting R9 at time 0:59000000
+OSS granting pid 139479 request for R9 at time 0:59000000
+OSS has detected pid 139479requesting R9 at time 0:60000000
+OSS blocking pid 139479 waiting for R9 at time 0:60000000
+#######################################################
+SYSTEM SNAPSHOT AT TIME 0:500000000
+#######################################################
+Currently running pid: none
+Blocked processes: 139479(R9)
+Resources available:
+  R0 R1 R2 R3 R4 R5 R6 R7 R8 R9 
+  2  4  2  2  5  2  2  3  4  0  
+Resources allocated:
+P139479 3 1 3 3 0 3 3 2 1 5 
+#######################################################
+#######################################################
+SYSTEM SNAPSHOT AT TIME 1:0
+#######################################################
+Currently running pid: none
+Blocked processes: 139479(R9)
+Resources available:
+  R0 R1 R2 R3 R4 R5 R6 R7 R8 R9 
+  2  4  2  2  5  2  2  3  4  0  
+Resources allocated:
+P139479 3 1 3 3 0 3 3 2 1 5 
+#######################################################
+OSS launched process pid 139480 at time 1:0
+OSS has acknowledged pid 139480 releasing R6 at time 1:0
+OSS has acknowledged pid 139480 releasing R5 at time 1:1000000
+OSS has acknowledged pid 139480 releasing R5 at time 1:2000000
+OSS has acknowledged pid 139480 releasing R2 at time 1:3000000
+OSS has detected pid 139480requesting R1 at time 1:4000000
+OSS granting pid 139480 request for R1 at time 1:4000000
+OSS has detected pid 139480requesting R7 at time 1:5000000
+OSS granting pid 139480 request for R7 at time 1:5000000
+OSS has acknowledged pid 139480 releasing R9 at time 1:6000000
+OSS has detected pid 139480requesting R6 at time 1:7000000
+OSS granting pid 139480 request for R6 at time 1:7000000
+OSS has detected pid 139480requesting R6 at time 1:8000000
+OSS granting pid 139480 request for R6 at time 1:8000000
+OSS has acknowledged pid 139480 releasing R6 at time 1:9000000
+OSS has detected pid 139480requesting R8 at time 1:10000000
+OSS granting pid 139480 request for R8 at time 1:10000000
+OSS has detected pid 139480requesting R9 at time 1:11000000
+OSS granting pid 139480 request for R9 at time 1:11000000
+OSS has acknowledged pid 139480 releasing R0 at time 1:12000000
+OSS has detected pid 139480requesting R3 at time 1:13000000
+OSS granting pid 139480 request for R3 at time 1:13000000
+OSS has detected pid 139480requesting R5 at time 1:14000000
+OSS granting pid 139480 request for R5 at time 1:14000000
+OSS has detected pid 139480requesting R2 at time 1:15000000
+OSS granting pid 139480 request for R2 at time 1:15000000
+OSS has detected pid 139480requesting R8 at time 1:16000000
+OSS granting pid 139480 request for R8 at time 1:16000000
+OSS has detected pid 139480requesting R7 at time 1:17000000
+OSS granting pid 139480 request for R7 at time 1:17000000
+OSS has acknowledged pid 139480 releasing R6 at time 1:18000000
+OSS has detected pid 139480requesting R2 at time 1:19000000
+OSS granting pid 139480 request for R2 at time 1:19000000
+OSS has detected pid 139480requesting R3 at time 1:20000000
+OSS granting pid 139480 request for R3 at time 1:20000000
+OSS has detected pid 139480requesting R9 at time 1:21000000
+OSS granting pid 139480 request for R9 at time 1:21000000
+OSS has acknowledged pid 139480 releasing R7 at time 1:22000000
+OSS has acknowledged pid 139480 releasing R4 at time 1:23000000
+OSS has detected pid 139480requesting R0 at time 1:24000000
+OSS granting pid 139480 request for R0 at time 1:24000000
+OSS has detected pid 139480requesting R6 at time 1:25000000
+OSS granting pid 139480 request for R6 at time 1:25000000
+OSS has acknowledged pid 139480 releasing R0 at time 1:26000000
+OSS has detected pid 139480requesting R3 at time 1:27000000
+OSS granting pid 139480 request for R3 at time 1:27000000
+OSS has detected pid 139480requesting R0 at time 1:28000000
+OSS granting pid 139480 request for R0 at time 1:28000000
+OSS has acknowledged pid 139480 releasing R1 at time 1:29000000
+OSS has detected pid 139480requesting R5 at time 1:30000000
+OSS granting pid 139480 request for R5 at time 1:30000000
+OSS has acknowledged pid 139480 releasing R7 at time 1:31000000
+OSS has detected pid 139480requesting R5 at time 1:32000000
+OSS granting pid 139480 request for R5 at time 1:32000000
+OSS has detected pid 139480requesting R9 at time 1:33000000
+OSS granting pid 139480 request for R9 at time 1:33000000
+OSS has detected pid 139480requesting R7 at time 1:34000000
+OSS granting pid 139480 request for R7 at time 1:34000000
+OSS has detected pid 139480requesting R5 at time 1:35000000
+OSS granting pid 139480 request for R5 at time 1:35000000
+OSS has acknowledged pid 139480 releasing R5 at time 1:36000000
+OSS has detected pid 139480requesting R7 at time 1:37000000
+OSS granting pid 139480 request for R7 at time 1:37000000
+OSS has detected pid 139480requesting R4 at time 1:38000000
+OSS granting pid 139480 request for R4 at time 1:38000000
+OSS has detected pid 139480requesting R0 at time 1:39000000
+OSS granting pid 139480 request for R0 at time 1:39000000
+OSS has acknowledged pid 139480 releasing R8 at time 1:40000000
+OSS has acknowledged pid 139480 releasing R8 at time 1:41000000
+OSS has acknowledged pid 139480 releasing R4 at time 1:42000000
+OSS has detected pid 139480requesting R1 at time 1:43000000
+OSS granting pid 139480 request for R1 at time 1:43000000
+OSS has detected pid 139480requesting R9 at time 1:44000000
+OSS granting pid 139480 request for R9 at time 1:44000000
+OSS has detected pid 139480requesting R0 at time 1:45000000
+OSS granting pid 139480 request for R0 at time 1:45000000
+OSS has acknowledged pid 139480 releasing R8 at time 1:46000000
+OSS has detected pid 139480requesting R2 at time 1:47000000
+OSS granting pid 139480 request for R2 at time 1:47000000
+OSS has detected pid 139480requesting R6 at time 1:48000000
+OSS granting pid 139480 request for R6 at time 1:48000000
+OSS has acknowledged pid 139480 releasing R9 at time 1:49000000
+OSS has acknowledged pid 139480 releasing R0 at time 1:50000000
+OSS has detected pid 139480requesting R8 at time 1:51000000
+OSS granting pid 139480 request for R8 at time 1:51000000
+OSS has detected pid 139480requesting R1 at time 1:52000000
+OSS granting pid 139480 request for R1 at time 1:52000000
+OSS has acknowledged pid 139480 releasing R2 at time 1:53000000
+OSS has detected pid 139480requesting R2 at time 1:54000000
+OSS granting pid 139480 request for R2 at time 1:54000000
+OSS has detected pid 139480requesting R6 at time 1:55000000
+OSS granting pid 139480 request for R6 at time 1:55000000
+OSS has detected pid 139480requesting R0 at time 1:56000000
+OSS granting pid 139480 request for R0 at time 1:56000000
+OSS has acknowledged pid 139480 releasing R1 at time 1:57000000
+OSS has detected pid 139480requesting R9 at time 1:58000000
+OSS granting pid 139480 request for R9 at time 1:58000000
+OSS has detected pid 139480requesting R9 at time 1:59000000
+OSS granting pid 139480 request for R9 at time 1:59000000
+OSS has detected pid 139480requesting R9 at time 1:60000000
+OSS blocking pid 139480 waiting for R9 at time 1:60000000
+#######################################################
+SYSTEM SNAPSHOT AT TIME 1:500000000
+#######################################################
+Currently running pid: none
+Blocked processes: 139480(R9)
+Resources available:
+  R0 R1 R2 R3 R4 R5 R6 R7 R8 R9 
+  2  4  2  2  5  2  2  3  4  0  
+Resources allocated:
+P139480 3 1 3 3 0 3 3 2 1 5 
+#######################################################
+#######################################################
+SYSTEM SNAPSHOT AT TIME 2:0
+#######################################################
+Currently running pid: none
+Blocked processes: 139480(R9)
+Resources available:
+  R0 R1 R2 R3 R4 R5 R6 R7 R8 R9 
+  2  4  2  2  5  2  2  3  4  0  
+Resources allocated:
+P139480 3 1 3 3 0 3 3 2 1 5 
+#######################################################
+OSS launched process pid 139481 at time 2:0
+OSS has acknowledged pid 139481 releasing R6 at time 2:0
+OSS has acknowledged pid 139481 releasing R5 at time 2:1000000
+OSS has acknowledged pid 139481 releasing R5 at time 2:2000000
+OSS has acknowledged pid 139481 releasing R2 at time 2:3000000
+OSS has detected pid 139481requesting R1 at time 2:4000000
+OSS granting pid 139481 request for R1 at time 2:4000000
+OSS has detected pid 139481requesting R7 at time 2:5000000
+OSS granting pid 139481 request for R7 at time 2:5000000
+OSS has acknowledged pid 139481 releasing R9 at time 2:6000000
+OSS has detected pid 139481requesting R6 at time 2:7000000
+OSS granting pid 139481 request for R6 at time 2:7000000
+OSS has detected pid 139481requesting R6 at time 2:8000000
+OSS granting pid 139481 request for R6 at time 2:8000000
+OSS has acknowledged pid 139481 releasing R6 at time 2:9000000
+OSS has detected pid 139481requesting R8 at time 2:10000000
+OSS granting pid 139481 request for R8 at time 2:10000000
+OSS has detected pid 139481requesting R9 at time 2:11000000
+OSS granting pid 139481 request for R9 at time 2:11000000
+OSS has acknowledged pid 139481 releasing R0 at time 2:12000000
+OSS has detected pid 139481requesting R3 at time 2:13000000
+OSS granting pid 139481 request for R3 at time 2:13000000
+OSS has detected pid 139481requesting R5 at time 2:14000000
+OSS granting pid 139481 request for R5 at time 2:14000000
+OSS has detected pid 139481requesting R2 at time 2:15000000
+OSS granting pid 139481 request for R2 at time 2:15000000
+OSS has detected pid 139481requesting R8 at time 2:16000000
+OSS granting pid 139481 request for R8 at time 2:16000000
+OSS has detected pid 139481requesting R7 at time 2:17000000
+OSS granting pid 139481 request for R7 at time 2:17000000
+OSS has acknowledged pid 139481 releasing R6 at time 2:18000000
+OSS has detected pid 139481requesting R2 at time 2:19000000
+OSS granting pid 139481 request for R2 at time 2:19000000
+OSS has detected pid 139481requesting R3 at time 2:20000000
+OSS granting pid 139481 request for R3 at time 2:20000000
+OSS has detected pid 139481requesting R9 at time 2:21000000
+OSS granting pid 139481 request for R9 at time 2:21000000
+OSS has acknowledged pid 139481 releasing R7 at time 2:22000000
+OSS has acknowledged pid 139481 releasing R4 at time 2:23000000
+OSS has detected pid 139481requesting R0 at time 2:24000000
+OSS granting pid 139481 request for R0 at time 2:24000000
+OSS has detected pid 139481requesting R6 at time 2:25000000
+OSS granting pid 139481 request for R6 at time 2:25000000
+OSS has acknowledged pid 139481 releasing R0 at time 2:26000000
+OSS has detected pid 139481requesting R3 at time 2:27000000
+OSS granting pid 139481 request for R3 at time 2:27000000
+OSS has detected pid 139481requesting R0 at time 2:28000000
+OSS granting pid 139481 request for R0 at time 2:28000000
+OSS has acknowledged pid 139481 releasing R1 at time 2:29000000
+OSS has detected pid 139481requesting R5 at time 2:30000000
+OSS granting pid 139481 request for R5 at time 2:30000000
+OSS has acknowledged pid 139481 releasing R7 at time 2:31000000
+OSS has detected pid 139481requesting R5 at time 2:32000000
+OSS granting pid 139481 request for R5 at time 2:32000000
+OSS has detected pid 139481requesting R9 at time 2:33000000
+OSS granting pid 139481 request for R9 at time 2:33000000
+OSS has detected pid 139481requesting R7 at time 2:34000000
+OSS granting pid 139481 request for R7 at time 2:34000000
+OSS has detected pid 139481requesting R5 at time 2:35000000
+OSS granting pid 139481 request for R5 at time 2:35000000
+OSS has acknowledged pid 139481 releasing R5 at time 2:36000000
+OSS has detected pid 139481requesting R7 at time 2:37000000
+OSS granting pid 139481 request for R7 at time 2:37000000
+OSS has detected pid 139481requesting R4 at time 2:38000000
+OSS granting pid 139481 request for R4 at time 2:38000000
+OSS has detected pid 139481requesting R0 at time 2:39000000
+OSS granting pid 139481 request for R0 at time 2:39000000
+OSS has acknowledged pid 139481 releasing R8 at time 2:40000000
+OSS has acknowledged pid 139481 releasing R8 at time 2:41000000
+OSS has acknowledged pid 139481 releasing R4 at time 2:42000000
+OSS has detected pid 139481requesting R1 at time 2:43000000
+OSS granting pid 139481 request for R1 at time 2:43000000
+OSS has detected pid 139481requesting R9 at time 2:44000000
+OSS granting pid 139481 request for R9 at time 2:44000000
+OSS has detected pid 139481requesting R0 at time 2:45000000
+OSS granting pid 139481 request for R0 at time 2:45000000
+OSS has acknowledged pid 139481 releasing R8 at time 2:46000000
+OSS has detected pid 139481requesting R2 at time 2:47000000
+OSS granting pid 139481 request for R2 at time 2:47000000
+OSS has detected pid 139481requesting R6 at time 2:48000000
+OSS granting pid 139481 request for R6 at time 2:48000000
+OSS has acknowledged pid 139481 releasing R9 at time 2:49000000
+OSS has acknowledged pid 139481 releasing R0 at time 2:50000000
+OSS has detected pid 139481requesting R8 at time 2:51000000
+OSS granting pid 139481 request for R8 at time 2:51000000
+OSS has detected pid 139481requesting R1 at time 2:52000000
+OSS granting pid 139481 request for R1 at time 2:52000000
+OSS has acknowledged pid 139481 releasing R2 at time 2:53000000
+OSS has detected pid 139481requesting R2 at time 2:54000000
+OSS granting pid 139481 request for R2 at time 2:54000000
+OSS has detected pid 139481requesting R6 at time 2:55000000
+OSS granting pid 139481 request for R6 at time 2:55000000
+OSS has detected pid 139481requesting R0 at time 2:56000000
+OSS granting pid 139481 request for R0 at time 2:56000000
+OSS has acknowledged pid 139481 releasing R1 at time 2:57000000
+OSS has detected pid 139481requesting R9 at time 2:58000000
+OSS granting pid 139481 request for R9 at time 2:58000000
+OSS has detected pid 139481requesting R9 at time 2:59000000
+OSS granting pid 139481 request for R9 at time 2:59000000
+OSS has detected pid 139481requesting R9 at time 2:60000000
+OSS blocking pid 139481 waiting for R9 at time 2:60000000
+#######################################################
+SYSTEM SNAPSHOT AT TIME 2:500000000
+#######################################################
+Currently running pid: none
+Blocked processes: 139481(R9)
+Resources available:
+  R0 R1 R2 R3 R4 R5 R6 R7 R8 R9 
+  2  4  2  2  5  2  2  3  4  0  
+Resources allocated:
+P139481 3 1 3 3 0 3 3 2 1 5 
+#######################################################
+#######################################################
+SYSTEM SNAPSHOT AT TIME 3:0
+#######################################################
+Currently running pid: none
+Blocked processes: 139481(R9)
+Resources available:
+  R0 R1 R2 R3 R4 R5 R6 R7 R8 R9 
+  2  4  2  2  5  2  2  3  4  0  
+Resources allocated:
+P139481 3 1 3 3 0 3 3 2 1 5 
+#######################################################
