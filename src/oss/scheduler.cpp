@@ -197,6 +197,25 @@ void OSS::Scheduler::handleTerminate() {
     terminateProcess();
 }
 
+void OSS::Scheduler::resolveDeadlock() {
+    auto deadlocked = resource_manager_->getDeadlockIndices(pcb_blocked_list);
+    if (deadlocked.empty()) {
+        return;
+    }
+
+    int victim_index = deadlocked[0];
+    PCB victim = pcb_blocked_list[victim_index];
+
+    kill(victim.pid, SIGTERM);
+    waitpid(victim.pid, nullptr, 0);
+    resource_manager_->releaseAll(victim);
+    resource_manager_->incrementDeadlockKills();
+    pcb_blocked_list.erase(pcb_blocked_list.begin() + victim_index);
+    pcb_info_.pcb_count_--;
+    //check this out...`
+    canUnblockBlockedProcess();
+}
+
 void OSS::Scheduler::updateProcessInReadyQueue()
 {
     if (current_process_running_.pid != -1) {
