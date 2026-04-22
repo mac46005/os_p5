@@ -95,8 +95,16 @@ void OSS::Scheduler::launchChildrenIfAble()
 }
 
 
+OSS::PCBQueue *OSS::Scheduler::getReadyQueue() {
+    return pcb_ready_queue_;
+}
 
-
+std::vector<OSS::PCB> OSS::Scheduler::getBlockedList() {
+    return pcb_blocked_list;
+}
+OSS::PCB OSS::Scheduler::getCurrentProcessingRunning() {
+    return current_process_running_;
+}
 
 
 

@@ -208,6 +208,76 @@ void OSS::OssOutput::logTerminateProcess(pid_t pid, OSSClock *clock){
 void OSS::OssOutput::logUnblockProcess(pid_t pid, int resource, OSSClock *clock) {
     writeLine("OSS unblocked pid " + std::to_string(pid) + " and granted R" + std::to_string(resource) + " at time " + clock->toString());
 }
+void OSS::OssOutput::logSystemTables(
+    const std::vector<PCB> &blocked_list,
+    PCBQueue *ready_queue,
+    const PCB &current_process_running,
+    ResourceManager *resource_manager,
+    OSSClock *clock
+) {
+    writeLine("#######################################################");
+    writeLine("SYSTEM SNAPSHOT AT TIME " + clock->toString());
+    writeLine("#######################################################");
+
+    if (current_process_running.pid > 0)
+    {
+        writeLine("Currently running pid: " + std::to_string(current_process_running.pid));
+    }
+    else
+    {
+        writeLine("Currently running pid: none");
+    }
+
+    std::string blocked = "Blocked processes: ";
+    if (blocked_list.empty()) {
+        blocked += "none";
+    } else {
+        for (const auto &pcb : blocked_list) {
+            blocked += std::to_string(pcb.pid) + "(R" + std::to_string(pcb.requested_resource) + ")";
+        }
+    }
+
+    writeLine(blocked);
+
+    writeLine("Resources available:");
+    std::string available_header = "  ";
+    std::string available_vals = "  ";
+    const auto &available = resource_manager->getAvailable();
+    for (int i = 0; i < 10; i++) {
+        available_header += "R" + std::to_string(i) + " ";
+        available_vals += std::to_string(available[i]) + "  ";
+    }
+    writeLine(available_header);
+    writeLine(available_vals);
+
+    writeLine("Resources allocated:");
+    if (current_process_running.pid > 0) {
+        std::string row = "P" + std::to_string(current_process_running.pid) + " ";
+        for (int i = 0; i < 10; i++) {
+            row += std::to_string(current_process_running.resource_allocated[i]) + " ";
+        }
+        writeLine(row);
+    }
+
+    for (const auto &pcb : blocked_list) {
+        std::string row = "P" + std::to_string(pcb.pid) + " ";
+        for (int i = 0; i < 10; i++) {
+            row += std::to_string(pcb.resource_allocated[i]) + " ";
+        }
+        writeLine(row);
+    }
+
+    ready_queue->traverse(
+        [this](PCB *pcb) {
+            std::string row = "P" + std::to_string(pcb->pid) + " ";
+            for (int i = 0; i < 10; i++) {
+                row += std::to_string(pcb->resource_allocated[i]) + " ";
+            }
+            writeLine(row);
+        }
+    );
+    writeLine("#######################################################");
+}
 
 
 

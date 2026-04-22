@@ -84,6 +84,7 @@ int OSS::OSS::run()
                         resource_manager_,
                         oss_clock_
                     );
+                    advanceNextTableDump();
                 }
             }
         }
