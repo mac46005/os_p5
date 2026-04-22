@@ -27,7 +27,8 @@ void OSS::OSSClock::updateOssTimeBy(Time time)
 
 Time OSS::OSSClock::getChildTimeLimit()
 {
-    return child_time_limit_;
+    Time random_time = generateRandomTimeFromBoundTimeLimit(child_time_limit_);
+    return random_time;
 }
 
 Time OSS::OSSClock::getCurrentTime()
@@ -37,6 +38,20 @@ Time OSS::OSSClock::getCurrentTime()
 }
 
 
+Time OSS::OSSClock::generateRandomTimeFromBoundTimeLimit(Time bound_time) {
+    static thread_local std::mt19937 rng{blocked_seed_};
+    std::uniform_real_distribution<int> dist(0, bound_time.sec);
+    
+    
+    
+    Time random_time;
+    random_time.sec = dist(rng);
+    std::uniform_real_distribution<int> dist(0, bound_time.nano);
+    random_time.nano = dist(rng);
+    blocked_seed_++;
+
+    return random_time;
+}
 
 
 
@@ -52,12 +67,13 @@ void OSS::OSSClock::checkIfLaunchIntervalReached() {
     bool reached = ((current_time_.sec > child_launch_time_.sec) || (current_time_.sec == child_launch_time_.sec && current_time_.nano >= child_launch_time_.nano));
     is_launch_interval_time_reached_ = reached;
 }
-void OSS::OSSClock::resetLaunchInterval()
+void OSS::OSSClock::setNewLaunchInterval()
 {
     Time *current_time = clock_->getCurrentTime();
     Time new_launch_time{0, 0};
-    new_launch_time.sec = child_launch_time_limit_.sec + current_time->sec;
-    new_launch_time.nano = child_launch_time_limit_.nano + current_time->nano;
+    Time random_time = generateRandomTimeFromBoundTimeLimit(child_launch_time_limit_);
+    new_launch_time.sec = random_time.sec + current_time->sec;
+    new_launch_time.nano = random_time.nano + current_time->nano;
     // wow
     if (new_launch_time.nano >= 1000000000) {
         new_launch_time.sec++;

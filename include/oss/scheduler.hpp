@@ -50,6 +50,7 @@ namespace OSS {
         MsgManager *msg_manager_;
 
         bool is_running_linear_process_ = false;
+        pid_t linear_process_pid_ = -1;
 
         PCBInfo pcb_info_{};
 
@@ -78,7 +79,8 @@ namespace OSS {
         std::vector<PCB> getBlockedList();
         PCB getCurrentProcessingRunning();
 
-
+        void checkLinearProcessStatus();
+        void cleanUpTerminatedPid(pid_t pid);
         void requeueCurrentProcess();
         void releaseCurrentProcessResources();
         void handleRequest(const MsgBuffer &msg);

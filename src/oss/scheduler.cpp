@@ -60,6 +60,10 @@ void OSS::Scheduler::forkProcess()
         PCB pcb = createPCB(pid);
         pcb_ready_queue_->enqueue(pcb);
 
+        if (is_running_linear_process_) {
+            linear_process_pid_ = pid;
+        }
+
         // output to log
         oss_output_->logProcessLaunch(pid, oss_clock_);
     }
@@ -79,19 +83,21 @@ void OSS::Scheduler::launchChildrenIfAble()
     if (pcb_info_.hasOpenPCBSlot() && oss_clock_->launchIntervalReached())
     {
         if (
-            !pcb_info_.isSimulCountReached())
+            !pcb_info_.isSimulCountReached()
+        )
         {
             pcb_info_.simultaneous_count_++;
             forkProcess();
         }
         else if (
-            !pcb_info_.isProcCountReached())
+            !pcb_info_.isProcCountReached() && !is_running_linear_process_
+        ) 
         {
             // ADD FLAG THAT LINEAR PROCESS RUN
             is_running_linear_process_ = true;
             forkProcess();
         }
-        oss_clock_->resetLaunchInterval();
+        oss_clock_->setNewLaunchInterval();
     }
 }
 
@@ -151,21 +157,30 @@ void OSS::Scheduler::canUnblockBlockedProcess()
 
 void OSS::Scheduler::terminateProcess()
 {
-    pcb_info_.pcb_count_--;
+    // pcb_info_.pcb_count_--;
 
-    releaseCurrentProcessResources();
+    // if (is_running_linear_process_) {
+    //     if (current_process_running_.pid == linear_process_pid_) {
+    //         is_running_linear_process_ = false;
+    //         linear_process_pid_ = -1;
+    //     }
+    // }
 
-    Time current_time = oss_clock_->getCurrentTime();
+    // releaseCurrentProcessResources();
 
-    current_process_running_.end_sec = current_time.sec;
-    current_process_running_.end_nano = current_time.nano;
-    // output to log
-    oss_output_->logTerminateProcess(current_process_running_.pid, oss_clock_);
-    completed_processes.push_back(current_process_running_);
+    // Time current_time = oss_clock_->getCurrentTime();
+
+    // current_process_running_.end_sec = current_time.sec;
+    // current_process_running_.end_nano = current_time.nano;
+    // // output to log
+    // oss_output_->logTerminateProcess(current_process_running_.pid, oss_clock_);
+    // completed_processes.push_back(current_process_running_);
     
-    current_process_running_ = PCB{.pid = -1};
+    // current_process_running_ = PCB{.pid = -1};
 
-    canUnblockBlockedProcess();
+    // canUnblockBlockedProcess();
+
+    cleanUpTerminatedPid(current_process_running_.pid);
 }
 
 
@@ -207,14 +222,21 @@ void OSS::Scheduler::resolveDeadlock() {
     int victim_index = deadlocked[0];
     PCB victim = pcb_blocked_list[victim_index];
 
+    if (is_running_linear_process_ && victim.pid == linear_process_pid_) {
+        is_running_linear_process_ = false;
+        linear_process_pid_ = -1;
+    }
+
     kill(victim.pid, SIGTERM);
     waitpid(victim.pid, nullptr, 0);
-    resource_manager_->releaseAll(victim);
-    resource_manager_->incrementDeadlockKills();
-    pcb_blocked_list.erase(pcb_blocked_list.begin() + victim_index);
-    pcb_info_.pcb_count_--;
-    //check this out...`
-    canUnblockBlockedProcess();
+
+
+    // resource_manager_->releaseAll(victim);
+    // resource_manager_->incrementDeadlockKills();
+    // pcb_blocked_list.erase(pcb_blocked_list.begin() + victim_index);
+    // pcb_info_.pcb_count_--;
+    // canUnblockBlockedProcess();
+    cleanUpTerminatedPid(victim.pid);
 }
 
 void OSS::Scheduler::updateProcessInReadyQueue()
@@ -256,6 +278,102 @@ void OSS::Scheduler::updateProcessInReadyQueue()
         0
     );
 }
+
+void OSS::Scheduler::checkLinearProcessStatus() {
+    if (!is_running_linear_process_ || linear_process_pid_ <= 0) {
+        return;
+    }
+
+    int status = 0;
+    pid_t result = waitpid(linear_process_pid_, &status, WNOHANG);
+
+    if (result == linear_process_pid_) {
+        // is_running_linear_process_ = false;
+        // linear_process_pid_ = -1;
+        // pcb_info_.pcb_count_--;
+        cleanUpTerminatedPid(linear_process_pid_);
+    }
+}
+
+void OSS::Scheduler::cleanUpTerminatedPid(pid_t pid) {
+    if (pid <= 0) {
+        return;
+    }
+
+    bool found = false;
+
+    if (current_process_running_.pid == pid) {
+        releaseCurrentProcessResources();
+
+        Time current_time = oss_clock_->getCurrentTime();
+        current_process_running_.end_sec = current_time.sec;
+        current_process_running_.end_nano = current_time.nano;
+
+        oss_output_->logTerminateProcess(current_process_running_.pid, oss_clock_);
+        completed_processes.push_back(current_process_running_);
+        current_process_running_ = PCB{.pid = -1};
+
+        found = true;
+    }
+
+    for (auto it = pcb_blocked_list.begin(); it != pcb_blocked_list.end(); ++it) {
+        if (it->pid == pid) {
+            resource_manager_->releaseAll(*it);
+
+            Time current_time = oss_clock_->getCurrentTime();
+            it->end_sec = current_time.sec;
+            it->end_nano = current_time.nano;
+
+            oss_output_->logTerminateProcess(it->pid, oss_clock_);
+            completed_processes.push_back(*it);
+            pcb_blocked_list.erase(it);
+
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        PCBQueue *new_queue = new PCBQueue();
+
+        while (!pcb_ready_queue_->isEmpty()) {
+            PCB pcb = pcb_ready_queue_->dequeue();
+
+            if (pcb.pid == pid) {
+                resource_manager_->releaseAll(pcb);
+
+                Time current_time = oss_clock_->getCurrentTime();
+                pcb.end_sec = current_time.sec;
+                pcb.end_nano = current_time.nano;
+
+                oss_output_->logTerminateProcess(pcb.pid, oss_clock_);
+                completed_processes.push_back(pcb);
+
+                found = true;
+            } else {
+                new_queue->enqueue(pcb);
+            }
+        }
+
+        delete pcb_ready_queue_;
+        pcb_ready_queue_ = new_queue;
+    }
+
+    if (is_running_linear_process_ && linear_process_pid_ == pid) {
+        is_running_linear_process_ = false;
+        linear_process_pid_ = -1;
+    }
+
+    if (found) {
+        if (pcb_info_.pcb_count_ > 0) {
+            pcb_info_.pcb_count_--;
+        }
+        
+        canUnblockBlockedProcess();
+    }
+    
+}
+
 
 void OSS::Scheduler::cleanUp()
 {

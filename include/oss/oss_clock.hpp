@@ -1,11 +1,11 @@
 #pragma once
 #include "../clock/clock.hpp"
-
+#include <random>
 namespace OSS {
     class OSSClock {
     private:
         Clock *clock_;
-
+        int blocked_seed_ = 0;
 
         Time time_quantum_{0,0};
         Time oss_work_time_{0,0};
@@ -30,8 +30,9 @@ namespace OSS {
         void updateOssTimeBy(Time time);
         Time getChildTimeLimit();
         Time getCurrentTime();
+        Time generateRandomTimeFromBoundTimeLimit(Time bound_time);
         
-        void resetLaunchInterval();
+        void setNewLaunchInterval();
         bool launchIntervalReached();
         void cleanUp();
 
