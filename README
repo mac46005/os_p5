@@ -5,16 +5,84 @@
 **Environment**: Ubuntu on Windows ,VSCode, Penguin Linux/GNU, VIM
 **Purpose**: Simulate the round robin scheduler on an OSS
 
+## How to compile the project:
+
+Reset project just in case:
+
+```bash
+make clean
+```
+
+Then recompile project:
+
+```bash
+make clean
+```
+
+## Usage
+
+```bash
+./oss -n INTEGER -s INTEGER -t DECIMAL -i DECIMAL
+```
+
+## Arguments
+
+```bash
+./oss [-h] [-n proc] [-s simul] [-t childTimeLimit] [-i launchTimeLimit] [-f logfile]
+```
+
+-h: prints help message
+-n proc: number of maximum processes oss will launch overal including simul.
+-s simul: number of simultaneous processes taht oss will launch. Does not exceed [-n proc].
+-t childTimeLimit: a bound time limit that children use for time execution
+-i launchTimeLimit: a bount time limit that decides when oss should launch a child
+-f logfile: the name of the log file that will be printed when the system is running
+
+
+Example:
+```bash
+./oss -n 2 -s 1 -t 1 -i 2 -f logfile
+```
+
+## AI Usage
+
 **ChatGPT**:
 
 Prompt:
-Revise my code for any errors. Specifically in messaging.
+How should I structure resource management in my project? Does it belong in my scheduler or is it a separate process?
 
-Conclusion:
-Revised code and should where any potential errors can occur.
+Summary:
+Ai explains to me that the scheduler and the resource management are separate things but both interact with each other.
 
 Prompt:
-Unsure how to handle signal for terminating.
+I am getting excvp failed: Bad Address
 
-Conclusion:
-Showed how to use signal handling for 3 seconds and handle ctrl+c
+Summary:
+I was having an issue with forking processes. The issues was that I was not feeding the user_proc the correct arguments. I have forgotten a nullptr.
+
+Prompt:
+Please check my work for any concerns. Please let me know if there are issues that may arise later in my program.
+
+Summary:
+There were some issues found in the Scheduler regarding how I would send messages to and from user_procs. I needed to determine what status to send to the user if a user is granted a resource or not.
+
+Prompt:
+OSS is stuck on a forever loop. I think it may be from message sending? Here is my code:....
+
+Summary:
+There were major issues in message processing. Oss would send a message but user_proc would not send a message back. Oss would be stuch waiting for a message. Issue was found.
+
+Prompt:
+Im not getting any deadlocks when running the system? Is my deadlock dectection working correctly.
+shows code...
+
+Summary:
+Issue was that I was running processes linearly and since processes ran linearly there was not really a change to simulate a deadlock.
+Deadlock detection is working correctly for the most part...or so i think.
+
+Prompt:
+Do I need to delete pointers?
+
+Summary:
+Yes and no. Only pointers that were instantiated with the new keyword get deleted.
+
