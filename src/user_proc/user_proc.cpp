@@ -109,8 +109,7 @@ int UserProcess::run()
 
                     // dont forget that parent can force kill you
                 },
-                0
-            );
+                0);
 
             if (recieve.status == GRANTED)
             {
@@ -118,6 +117,7 @@ int UserProcess::run()
                 {
                     held_resources_[recieve.resource]++;
                 }
+                continue;
             }
             else
             {
@@ -136,6 +136,20 @@ int UserProcess::run()
                     {
                         msg_manager_->sendMessage(ppid_, pid_, ProcessStatus::REQUEST, resource, 0);
                     }
+                    else
+                    {
+                        int release_resource = chooseReleaseResource();
+                        if (release_resource >= 0)
+                        {
+                            held_resources_[release_resource]--;
+                            msg_manager_->sendMessage(ppid_, pid_, ProcessStatus::RELEASE, release_resource, 0);
+                        }
+                        else
+                        {
+                            msg_manager_->sendMessage(ppid_, pid_, ProcessStatus::TERMINATE, -1, 0);
+                            break;
+                        }
+                    }
                 }
                 else
                 {
@@ -147,8 +161,16 @@ int UserProcess::run()
                     }
                     else
                     {
-                        msg_manager_->sendMessage(ppid_, pid_, ProcessStatus::TERMINATE, -1, 0);
-                        break;
+                        int resource_requested = chooseRequestResource();
+                        if (resource_requested >= 0)
+                        {
+                            msg_manager_->sendMessage(ppid_, pid_, ProcessStatus::REQUEST, resource_requested, 0);
+                        }
+                        else
+                        {
+                            msg_manager_->sendMessage(ppid_, pid_, ProcessStatus::TERMINATE, -1, 0);
+                            break;
+                        }
                     }
                 }
             }

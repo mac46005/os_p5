@@ -218,6 +218,7 @@ void OSS::Scheduler::handleTerminate() {
 }
 
 void OSS::Scheduler::resolveDeadlock() {
+    resource_manager_->incrementDeadlockRuns();
     auto deadlocked = resource_manager_->getDeadlockIndices(pcb_blocked_list);
     if (deadlocked.empty()) {
         return;
@@ -236,7 +237,7 @@ void OSS::Scheduler::resolveDeadlock() {
 
 
     // resource_manager_->releaseAll(victim);
-    // resource_manager_->incrementDeadlockKills();
+    resource_manager_->incrementDeadlockKills();
     // pcb_blocked_list.erase(pcb_blocked_list.begin() + victim_index);
     // pcb_info_.pcb_count_--;
     // canUnblockBlockedProcess();
